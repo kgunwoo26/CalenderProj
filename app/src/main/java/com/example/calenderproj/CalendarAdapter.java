@@ -5,20 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 public class CalendarAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<Integer> mCalendarList = new ArrayList<Integer>();
+    private ArrayList<String> mCalendarList;
+    private int mResource;
     private TextView ViewText;
 
-    public CalendarAdapter(Context context, ArrayList<Integer> CalendarList) {
+    public CalendarAdapter(Context context,int resource, ArrayList<String> CalendarList) {
         mContext = context;
         mCalendarList = CalendarList;
+        mResource = resource;
     }
 
     @Override
@@ -27,7 +30,7 @@ public class CalendarAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public String getItem(int position) {
         return mCalendarList.get(position);
     }
 
@@ -36,17 +39,20 @@ public class CalendarAdapter extends BaseAdapter {
         return position;
     }
 
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//
-//
-//        if (convertView == null) {
-//            Inflater inflater = null;
-//            convertView = inflater.inflate(R.layout.item, parent, false);
-//
-//            return convertView;
-//        }
-//
-//    }
-//}
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(mResource,parent,false);
+            ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
+            layoutParams.height = (int) (parent.getHeight() *0.166666666);
+         }
+
+        TextView day = convertView.findViewById(R.id.item);
+        day.setText(getItem(position));
+        return convertView;
+    }
+
+}
 
 

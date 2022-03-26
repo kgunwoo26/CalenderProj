@@ -7,9 +7,10 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/item_gridview"
+        android:id="@+id/item"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:gravity="center_horizontal"
-        android:textSize="15sp" />
+        android:text="test"
+        android:textSize="15dp" />
 </LinearLayout>
