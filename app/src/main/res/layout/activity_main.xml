@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-
     tools:context=".MainActivity">
 <LinearLayout
     android:layout_width="match_parent"
@@ -31,7 +30,7 @@
                 android:layout_width="98dp"
                 android:layout_height="wrap_content"
                 android:text="이전"
-                android:id="@+id/preMonthBnt"></Button>
+                android:id="@+id/preMonthBtn"></Button>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,6 +118,6 @@
     </LinearLayout>
 
 
-    </LinearLayout>
+</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
