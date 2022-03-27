@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayList <String> dateArr = new ArrayList();
         Calendar cal = date;
         cal.set(Calendar.DATE,1);
-<<<<<<< HEAD
 
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
         if(dayOfWeek ==7)
@@ -110,11 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
         int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
 
-=======
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
-        if(dayOfWeek ==7) dayOfWeek=0;
-        int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
->>>>>>> 0f75c96449fe593f2623cefb9d0cd7a455c40b6e
         for (int i = 1; i <= 41; i++) {
             if(i<= dayOfWeek || i> (lengthOfMonth + dayOfWeek))
                 dateArr.add("");
