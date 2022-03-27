@@ -81,10 +81,9 @@ public class MainActivity extends AppCompatActivity {
         ArrayList <String> dateArr = new ArrayList();
         Calendar cal = date;
         cal.set(Calendar.DATE,1);
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        dayOfWeek -=1;
-        if(dayOfWeek ==6) dayOfWeek=0;
-        int lengthOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
+        if(dayOfWeek ==7) dayOfWeek=0;
+        int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
         for (int i = 1; i <= 41; i++) {
             if(i<= dayOfWeek || i> (lengthOfMonth + dayOfWeek)) dateArr.add("");
             else dateArr.add(String.valueOf(i-dayOfWeek));
