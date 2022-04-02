@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,25 +82,23 @@ public class MonthViewActivity extends AppCompatActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
+
         yearMonthText.setText(DateToString(selectedDate));
-
         ArrayList<String> dateArr = setCalendarDate(selectedDate);
+        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
+        GridView mGridView = (GridView) findViewById(R.id.gridview);
 
-        //CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
-
-
-        /*GridView mGridView = (GridView) findViewById(R.id.gridview);
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
-                   String name = (String) ((TextView)vClicked.findViewById(R.id.textItem1)).getText();
-                String selected_date = adapter.getItem(position);
-                int selected_month = selectedDate.get(Calendar.MONTH) + 1;
-                int selected_year = selectedDate.get(Calendar.YEAR);
-                Toast.makeText(MainActivity.this, selected_year+"."+selected_month+"."+selected_date ,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-        mGridView.setAdapter(adapter);*/
+//        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
+//                   String name = (String) ((TextView)vClicked.findViewById(R.id.textItem1)).getText();
+//                String selected_date = adapter.getItem(position);
+//                int selected_month = selectedDate.get(Calendar.MONTH) + 1;
+//                int selected_year = selectedDate.get(Calendar.YEAR);
+//                Toast.makeText(MonthViewActivity.this, selected_year+"."+selected_month+"."+selected_date ,
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
+        mGridView.setAdapter(adapter);
     }
 
 
