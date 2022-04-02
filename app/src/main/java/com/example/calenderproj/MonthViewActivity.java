@@ -71,6 +71,7 @@ public class MonthViewActivity extends AppCompatActivity {
     }
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
 // 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
+    //커밋전송용
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String DateToString(Calendar date){
         SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월");
