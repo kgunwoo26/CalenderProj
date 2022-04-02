@@ -40,16 +40,12 @@ public class CalendarAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(mResource,parent,false);
          }
-        //-- 아래 두줄 코드
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight() *0.166666666);
-        //-- 설명좀 해주시면 감사하겠습니다!!
-
         TextView day = convertView.findViewById(R.id.item);
         day.setText(getItem(position));
         return convertView;

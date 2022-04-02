@@ -33,20 +33,19 @@ public class MonthViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initWidgets();
-        initBtnListners();
-        getIntentValue();
         setMonthView();
+    }
+    private void initWidgets(){
+        yearMonthText = findViewById(R.id.YearMonthText);
+        mainIntent = getIntent();
+        getIntentValue();
+        initBtnListners();
     }
 
     private void getIntentValue() {
         if(mainIntent.hasExtra("selected_Date"))
             selectedDate = (Calendar) mainIntent.getSerializableExtra("selected_Date");
         else selectedDate = Calendar.getInstance();
-    }
-
-    private void initWidgets(){
-        yearMonthText = findViewById(R.id.YearMonthText);
-        mainIntent = getIntent();
     }
 
     private void initBtnListners() {
@@ -72,20 +71,17 @@ public class MonthViewActivity extends AppCompatActivity {
             }
         });
     }
-// SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
-// 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private String DateToString(Calendar date){
-        SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월");
-        return dataFormat.format(date.getTime());
-    }
-
     private void refreshActivity(){
         Intent intent = new Intent(MonthViewActivity.this, MonthViewActivity.class);
         intent.putExtra("selected_Date",selectedDate);
         startActivity(intent);
         finish();
     }
+// SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
+// 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
@@ -96,12 +92,19 @@ public class MonthViewActivity extends AppCompatActivity {
         printToast(mGridView,adapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String DateToString(Calendar date){
+        SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월");
+        return dataFormat.format(date.getTime());
+    }
+
     private void printToast(GridView mGridView, CalendarAdapter adapter) {
         int selected_month = selectedDate.get(Calendar.MONTH) + 1;
         int selected_year = selectedDate.get(Calendar.YEAR);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
                 String selected_date = adapter.getItem(position);
+                if(selected_date != "")
                 Toast.makeText(MonthViewActivity.this,
                         selected_year+"."+selected_month+"."+selected_date , Toast.LENGTH_SHORT).show();
             }
@@ -111,17 +114,17 @@ public class MonthViewActivity extends AppCompatActivity {
 
     // 일요일 : 0 ~ 토요일 : 6
     public ArrayList<String> setCalendarDate(Calendar date){
-        ArrayList <String> dateArr = new ArrayList();
+        ArrayList <String> dateArray = new ArrayList();
         Calendar cal = date;
         cal.set(Calendar.DATE,1);
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
         int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
         for (int i = 1; i <= 41; i++) {
             if(i<= dayOfWeek || i> (lengthOfMonth + dayOfWeek))
-                dateArr.add("");
-            else dateArr.add(String.valueOf(i-dayOfWeek));
+                dateArray.add("");
+            else dateArray.add(String.valueOf(i-dayOfWeek));
         }
-        return dateArr;
+        return dateArray;
     }
 
 
