@@ -71,7 +71,6 @@ public class MonthViewActivity extends AppCompatActivity {
     }
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
 // 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
-    //커밋전송용
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String DateToString(Calendar date){
         SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월");
@@ -94,7 +93,6 @@ public class MonthViewActivity extends AppCompatActivity {
         GridView mGridView = (GridView) findViewById(R.id.gridview);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
-                String name = (String) ((TextView)vClicked.findViewById(R.id.textItem1)).getText();
                 String selected_date = adapter.getItem(position);
                 int selected_month = selectedDate.get(Calendar.MONTH) + 1;
                 int selected_year = selectedDate.get(Calendar.YEAR);
