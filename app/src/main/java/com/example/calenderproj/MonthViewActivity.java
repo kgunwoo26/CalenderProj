@@ -112,8 +112,6 @@ public class MonthViewActivity extends AppCompatActivity {
         cal.set(Calendar.DATE,1);
 
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
-        if(dayOfWeek ==7)
-            dayOfWeek=0;
 
         int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
 
