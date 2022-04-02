@@ -88,16 +88,16 @@ public class MonthViewActivity extends AppCompatActivity {
         CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
         GridView mGridView = (GridView) findViewById(R.id.gridview);
 
-//        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
-//                   String name = (String) ((TextView)vClicked.findViewById(R.id.textItem1)).getText();
-//                String selected_date = adapter.getItem(position);
-//                int selected_month = selectedDate.get(Calendar.MONTH) + 1;
-//                int selected_year = selectedDate.get(Calendar.YEAR);
-//                Toast.makeText(MonthViewActivity.this, selected_year+"."+selected_month+"."+selected_date ,
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        //토스트 메시지를 출력하는 이벤트 클릭 리스너 set 메소드와 동시에 정의.
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
+                String selected_date = adapter.getItem(position);
+                int selected_month = selectedDate.get(Calendar.MONTH) + 1;
+                int selected_year = selectedDate.get(Calendar.YEAR);
+                Toast.makeText(MonthViewActivity.this, selected_year+"."+selected_month+"."+selected_date ,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
         mGridView.setAdapter(adapter);
     }
 
