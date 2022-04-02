@@ -3,42 +3,40 @@ package com.example.calenderproj;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.media.MediaDrm;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class MonthViewActivity extends AppCompatActivity {
 
     private TextView yearMonthText;
     private Calendar selectedDate;
-
+    private Intent mainIntent ;
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initWidgets();
         initBtnListners();
-        selectedDate = Calendar.getInstance();
+        if(mainIntent.hasExtra("selected_Date")) {
+            selectedDate = (Calendar) mainIntent.getSerializableExtra("selected_Date");
+        }
+        else selectedDate = Calendar.getInstance();
         setMonthView();
     }
 
     private void initWidgets(){
         yearMonthText = findViewById(R.id.YearMonthText);
+        mainIntent = getIntent();
     }
 
     private void initBtnListners() {
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int month = selectedDate.get(Calendar.MONTH);
                 selectedDate.set(Calendar.MONTH,month-1);
-                setMonthView();
+                refreshActivity();
             }
         });
 
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int month = selectedDate.get(Calendar.MONTH);
                 selectedDate.set(Calendar.MONTH,month+1);
-                setMonthView();
+                refreshActivity();
             }
         });
     }
@@ -73,18 +71,25 @@ public class MainActivity extends AppCompatActivity {
         return dataFormat.format(date.getTime());
     }
 
-
+    private void refreshActivity(){
+        Intent intent = new Intent(MonthViewActivity.this, MonthViewActivity.class);
+        intent.putExtra("selected_Date",selectedDate);
+        startActivity(intent);
+        finish();
+    }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
-        ArrayList<String> dateArr = setCalendarDate(selectedDate);
-        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
-        GridView mGridView = (GridView) findViewById(R.id.gridview);
 
+        ArrayList<String> dateArr = setCalendarDate(selectedDate);
+
+        //CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
+
+
+        /*GridView mGridView = (GridView) findViewById(R.id.gridview);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View vClicked,
-                                    int position, long id) {
-                //   String name = (String) ((TextView)vClicked.findViewById(R.id.textItem1)).getText();
+            public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
+                   String name = (String) ((TextView)vClicked.findViewById(R.id.textItem1)).getText();
                 String selected_date = adapter.getItem(position);
                 int selected_month = selectedDate.get(Calendar.MONTH) + 1;
                 int selected_year = selectedDate.get(Calendar.YEAR);
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
-        mGridView.setAdapter(adapter);
+        mGridView.setAdapter(adapter);*/
     }
 
 
