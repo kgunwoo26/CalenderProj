@@ -7,18 +7,15 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context=".MonthViewActivity">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,7 +103,7 @@
         </LinearLayout>
         
         <GridView
-            android:id="@+id/gridview"
+            android:id="@+id/dayGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:stretchMode="columnWidth"
@@ -117,6 +114,6 @@
     </LinearLayout>
 
 
-</LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

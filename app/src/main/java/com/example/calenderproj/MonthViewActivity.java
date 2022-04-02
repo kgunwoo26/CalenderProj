@@ -25,6 +25,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private TextView yearMonthText;
     private Calendar selectedDate;
     private Intent mainIntent ;
+    private ArrayList<String> dateArr;
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
@@ -33,11 +34,14 @@ public class MonthViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initWidgets();
         initBtnListners();
-        if(mainIntent.hasExtra("selected_Date")) {
-            selectedDate = (Calendar) mainIntent.getSerializableExtra("selected_Date");
-        }
-        else selectedDate = Calendar.getInstance();
+        getIntentValue();
         setMonthView();
+    }
+
+    private void getIntentValue() {
+        if(mainIntent.hasExtra("selected_Date"))
+            selectedDate = (Calendar) mainIntent.getSerializableExtra("selected_Date");
+        else selectedDate = Calendar.getInstance();
     }
 
     private void initWidgets(){
@@ -48,7 +52,6 @@ public class MonthViewActivity extends AppCompatActivity {
     private void initBtnListners() {
         Button preButton = (Button)findViewById(R.id.preMonthBtn);
         Button nextButton = (Button)findViewById(R.id.nextMonthBtn);
-
         preButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -86,40 +89,37 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
-        ArrayList<String> dateArr = setCalendarDate(selectedDate);
-
+        dateArr = setCalendarDate(selectedDate);
         CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
+        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
+        mGridView.setAdapter(adapter);
+        printToast(mGridView,adapter);
+    }
 
-        GridView mGridView = (GridView) findViewById(R.id.gridview);
+    private void printToast(GridView mGridView, CalendarAdapter adapter) {
+        int selected_month = selectedDate.get(Calendar.MONTH) + 1;
+        int selected_year = selectedDate.get(Calendar.YEAR);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
                 String selected_date = adapter.getItem(position);
-                int selected_month = selectedDate.get(Calendar.MONTH) + 1;
-                int selected_year = selectedDate.get(Calendar.YEAR);
-                Toast.makeText(MonthViewActivity.this, selected_year+"."+selected_month+"."+selected_date ,
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(MonthViewActivity.this,
+                        selected_year+"."+selected_month+"."+selected_date , Toast.LENGTH_SHORT).show();
             }
         });
-        mGridView.setAdapter(adapter);
     }
 
 
-
-// 일요일 : 0 ~ 토요일 : 6
+    // 일요일 : 0 ~ 토요일 : 6
     public ArrayList<String> setCalendarDate(Calendar date){
         ArrayList <String> dateArr = new ArrayList();
         Calendar cal = date;
         cal.set(Calendar.DATE,1);
-
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
-
         int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
-
         for (int i = 1; i <= 41; i++) {
             if(i<= dayOfWeek || i> (lengthOfMonth + dayOfWeek))
                 dateArr.add("");
-            else
-                dateArr.add(String.valueOf(i-dayOfWeek));
+            else dateArr.add(String.valueOf(i-dayOfWeek));
         }
         return dateArr;
     }
