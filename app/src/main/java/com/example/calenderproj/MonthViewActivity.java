@@ -2,6 +2,8 @@ package com.example.calenderproj;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +27,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private TextView yearMonthText;
     private Calendar selectedDate;
     private Intent mainIntent ;
-    private ArrayList<String> dateArr;
+    public static ArrayList<String> dateArr;
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
@@ -33,12 +35,13 @@ public class MonthViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initWidgets();
-        setMonthView();
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
         yearMonthText = findViewById(R.id.YearMonthText);
         mainIntent = getIntent();
         getIntentValue();
+        setMonthView();
         initBtnListners();
     }
 
@@ -72,10 +75,11 @@ public class MonthViewActivity extends AppCompatActivity {
         });
     }
     private void refreshActivity(){
-        Intent intent = new Intent(MonthViewActivity.this, MonthViewActivity.class);
-        intent.putExtra("selected_Date",selectedDate);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(MonthViewActivity.this, MonthViewActivity.class);
+//        intent.putExtra("selected_Date",selectedDate);
+//        startActivity(intent);
+//        finish();
+
     }
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
 // 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
@@ -86,10 +90,12 @@ public class MonthViewActivity extends AppCompatActivity {
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
-        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
-        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
-        mGridView.setAdapter(adapter);
-        printToast(mGridView,adapter);
+        getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new WeekFragment()).commit();
+//        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
+//        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
+//        mGridView.setAdapter(adapter);
+//        printToast(mGridView,adapter);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

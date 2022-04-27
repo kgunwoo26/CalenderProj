@@ -2,57 +2,29 @@ package com.example.calenderproj;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link WeekFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.time.Month;
+
 public class WeekFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private int mIndex;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public WeekFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WeekFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WeekFragment newInstance(String param1, String param2) {
-        WeekFragment fragment = new WeekFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -60,7 +32,11 @@ public class WeekFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_week, container, false);
         GridView gridView = rootView.findViewById(R.id.week_dayGridView);
-        gridView.setAdapter(new ArrayAdapter<String>(getActivity(),));
-        return inflater.inflate(R.layout.fragment_week, container, false);
+        ViewGroup.LayoutParams layoutParams = gridView.getLayoutParams();
+        Log.e("높이", String.valueOf(rootView.getHeight()));
+        gridView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.item,R.id.text1, MonthViewActivity.dateArr));
+        gridView.setLayoutParams(layoutParams);
+
+        return rootView;
     }
 }

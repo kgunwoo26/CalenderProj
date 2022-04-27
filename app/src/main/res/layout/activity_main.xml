@@ -101,15 +101,13 @@
                 android:text="토"></TextView>
 
         </LinearLayout>
-        
-        <GridView
+        <LinearLayout
             android:id="@+id/dayGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:stretchMode="columnWidth"
-            android:numColumns="7"
-            android:gravity="center"
-            ></GridView>
+            android:orientation="vertical">
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WeekFragment">
+    tools:context=".WeekFragment"
+    android:background="#eeaa66">
 
-    <!-- TODO: Update blank fragment layout -->
+     TODO: Update blank fragment layout
     <GridView
         android:id="@+id/week_dayGridView"
         android:layout_width="match_parent"
@@ -13,6 +14,7 @@
         android:stretchMode="columnWidth"
         android:numColumns="7"
         android:gravity="center"
+        android:background="#eeaa66"
         ></GridView>
 
 </FrameLayout>

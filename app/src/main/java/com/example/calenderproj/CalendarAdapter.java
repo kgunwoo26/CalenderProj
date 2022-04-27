@@ -46,8 +46,8 @@ public class CalendarAdapter extends BaseAdapter {
          }
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight() *0.166666666);
-        TextView day = convertView.findViewById(R.id.item);
-        day.setText(getItem(position));
+       // TextView day = convertView.findViewById(R.id.item);
+       // day.setText(getItem(position));
         return convertView;
     }
 

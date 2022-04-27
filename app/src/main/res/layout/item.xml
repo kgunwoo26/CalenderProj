@@ -8,9 +8,9 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/item"
+        android:id="@+id/text1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="300px"
         android:text="test"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
