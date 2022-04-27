@@ -9,9 +9,12 @@
         <entry key="..\:/Users/khaer/AndroidStudioProjects/CalenderProj/app/src/main/res/drawable/ic_launcher_background.xml" value="0.284" />
         <entry key="..\:/Users/khaer/AndroidStudioProjects/CalenderProj/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Users/khaer/AndroidStudioProjects/CalenderProj/app/src/main/res/layout/item.xml" value="0.264" />
+        <entry key="..\:/Users/user/Documents/GitHub/CalenderProj/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/user/Documents/GitHub/CalenderProj/app/src/main/res/layout/fragment_week.xml" value="0.36614583333333334" />
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
