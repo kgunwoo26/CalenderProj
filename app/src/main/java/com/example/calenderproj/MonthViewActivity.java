@@ -2,16 +2,11 @@ package com.example.calenderproj;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -90,7 +85,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
-        getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new WeekFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
 //        mGridView.setAdapter(adapter);
