@@ -36,7 +36,7 @@ public class MonthViewActivity extends AppCompatActivity {
         yearMonthText = findViewById(R.id.YearMonthText);
         mainIntent = getIntent();
         getIntentValue();
-        setMonthView();
+        setWeekView();
         initBtnListners();
     }
 
