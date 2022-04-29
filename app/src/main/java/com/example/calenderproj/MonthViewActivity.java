@@ -2,6 +2,7 @@ package com.example.calenderproj;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Build;
@@ -23,18 +24,23 @@ public class MonthViewActivity extends AppCompatActivity {
     private Calendar selectedDate;
     private Intent mainIntent ;
     public static ArrayList<String> dateArr;
+    private Toolbar myToolbar;
+    private TextView toolbar_text;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setSupportActionBar(myToolbar);
         initWidgets();
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
         yearMonthText = findViewById(R.id.YearMonthText);
         mainIntent = getIntent();
+        toolbar_text = findViewById(R.id.toolbar_text);
         getIntentValue();
         setWeekView();
         initBtnListners();
@@ -82,6 +88,7 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         yearMonthText.setText(DateToString(selectedDate));
+        toolbar_text.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
         getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new WeekFragment()).commit();
     }
@@ -89,6 +96,7 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
+        toolbar_text.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
         getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
