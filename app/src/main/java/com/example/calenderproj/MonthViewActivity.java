@@ -7,6 +7,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -33,8 +36,32 @@ public class MonthViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_text);
         setSupportActionBar(myToolbar);
         initWidgets();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.monthcal_fragment:
+                // 차후 Fragment로 교체
+                Toast.makeText(getApplicationContext(), "action_quick", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.weekcal_fragment:
+                // 차후 Fragment로 교체
+                Toast.makeText(getApplicationContext(), "action_settings", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
