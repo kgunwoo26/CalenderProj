@@ -27,7 +27,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private Calendar selectedDate;
     private Intent mainIntent ;
     public static ArrayList<String> dateArr;
-    private Toolbar myToolbar;
+    Toolbar myToolbar;
     private TextView toolbar_text;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -36,7 +36,7 @@ public class MonthViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_text);
+        myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
         initWidgets();
     }
@@ -51,13 +51,11 @@ public class MonthViewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.monthcal_fragment:
-                // 차후 Fragment로 교체
-                Toast.makeText(getApplicationContext(), "action_quick", Toast.LENGTH_SHORT).show();
+            case R.id.week_dayGridView:
+                getSupportFragmentManager().beginTransaction().replace(R.id.month_frag,new MonthFragment()).commit();
                 return true;
-            case R.id.weekcal_fragment:
-                // 차후 Fragment로 교체
-                Toast.makeText(getApplicationContext(), "action_settings", Toast.LENGTH_SHORT).show();
+            case R.id.week_dayGridView2:
+                getSupportFragmentManager().beginTransaction().replace(R.id.week_frag,new WeekFragment()).commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

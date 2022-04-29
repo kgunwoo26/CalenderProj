@@ -21,13 +21,14 @@ public class MonthFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_month, container, false);
-         CalendarAdapter adapter = new CalendarAdapter( getActivity().getApplicationContext(),R.layout.item, dateArr);
+         CalendarAdapter adapter = new CalendarAdapter( getActivity().getApplicationContext(),R.layout.month_item, dateArr);
         GridView gridView = rootView.findViewById(R.id.week_dayGridView);
         gridView.setAdapter(adapter);
         return rootView;
