@@ -3,6 +3,7 @@ package com.example.calenderproj;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Build;
@@ -48,26 +49,28 @@ public class MonthViewActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.week_dayGridView:
-                getSupportFragmentManager().beginTransaction().replace(R.id.month_frag,new MonthFragment()).commit();
+            case R.id.weekcal_fragment:
+                setWeekView();
                 return true;
-            case R.id.week_dayGridView2:
-                getSupportFragmentManager().beginTransaction().replace(R.id.week_frag,new WeekFragment()).commit();
+            case R.id.monthcal_fragment:
+               setMonthView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
         yearMonthText = findViewById(R.id.YearMonthText);
         mainIntent = getIntent();
         toolbar_text = findViewById(R.id.toolbar_text);
         getIntentValue();
-        setWeekView();
+        setMonthView();
         initBtnListners();
     }
 
@@ -115,7 +118,7 @@ public class MonthViewActivity extends AppCompatActivity {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
-        getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new WeekFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -123,7 +126,7 @@ public class MonthViewActivity extends AppCompatActivity {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
-        getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new MonthFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
 //        mGridView.setAdapter(adapter);
