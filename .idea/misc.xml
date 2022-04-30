@@ -20,7 +20,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.159" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_month.xml" value="0.2540526849037487" />
-        <entry key="app/src/main/res/layout/fragment_week.xml" value="0.2540526849037487" />
+        <entry key="app/src/main/res/layout/fragment_week.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item.xml" value="0.2540526849037487" />
         <entry key="app/src/main/res/layout/item2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/month_item.xml" value="0.25" />
