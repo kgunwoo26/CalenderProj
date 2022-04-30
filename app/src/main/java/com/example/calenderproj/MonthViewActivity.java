@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Build;
@@ -39,6 +41,12 @@ public class MonthViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
+
+
+        ViewPager2 vpPager = findViewById(R.id.vpPager);
+        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+        vpPager.setAdapter(adapter);
+
         initWidgets();
     }
 
@@ -69,6 +77,8 @@ public class MonthViewActivity extends AppCompatActivity {
         yearMonthText = findViewById(R.id.YearMonthText);
         mainIntent = getIntent();
         toolbar_text = findViewById(R.id.toolbar_text);
+
+
         getIntentValue();
         setMonthView();
         initBtnListners();
@@ -79,6 +89,8 @@ public class MonthViewActivity extends AppCompatActivity {
             selectedDate = (Calendar) mainIntent.getSerializableExtra("selected_Date");
         else selectedDate = Calendar.getInstance();
     }
+
+
 
     private void initBtnListners() {
         Button preButton = (Button)findViewById(R.id.preMonthBtn);
@@ -127,10 +139,10 @@ public class MonthViewActivity extends AppCompatActivity {
         toolbar_text.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
-//        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
-//        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
-//        mGridView.setAdapter(adapter);
-//        printToast(mGridView,adapter);
+        //CalendarAdapter adapter = new CalendarAdapter(this,R.layout.month_item, dateArr);
+        //GridView mGridView = (GridView) findViewById(R.id.week_dayGridView);
+       // mGridView.setAdapter(adapter);
+        //printToast(mGridView,adapter);
 
     }
 
@@ -161,7 +173,7 @@ public class MonthViewActivity extends AppCompatActivity {
         cal.set(Calendar.DATE,1);
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
         int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
-        for (int i = 1; i <= 41; i++) {
+        for (int i = 1; i <= 42; i++) {
             if(i<= dayOfWeek || i> (lengthOfMonth + dayOfWeek))
                 dateArray.add("");
             else dateArray.add(String.valueOf(i-dayOfWeek));

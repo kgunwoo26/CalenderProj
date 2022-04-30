@@ -24,6 +24,14 @@ public class MonthFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static MonthFragment newInstance(int month){
+        MonthFragment monthFragment = new MonthFragment();
+        Bundle args = new Bundle();
+        args.putInt("month",month);
+        monthFragment.setArguments(args);
+        return monthFragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,5 +47,6 @@ public class MonthFragment extends Fragment {
         gridView.setAdapter(adapter);
         return rootView;
     }
+
 
 }
