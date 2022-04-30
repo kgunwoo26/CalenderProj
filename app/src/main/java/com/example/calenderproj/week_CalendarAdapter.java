@@ -39,11 +39,11 @@ public class week_CalendarAdapter extends BaseAdapter{
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(mResource,parent,false);
+                convertView = inflater.inflate(mResource, parent, false);
             }
-            ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
-            layoutParams.height = (int) (parent.getHeight() *0.166666666);
-            TextView day = convertView.findViewById(R.id.text);
+//            ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
+//            layoutParams.height = (int) (parent.getHeight() *0.1);
+            TextView day = convertView.findViewById(R.id.text_2);
             day.setText(getItem(position));
             return convertView;
         }

@@ -6,6 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+<<<<<<< Updated upstream
+=======
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+>>>>>>> Stashed changes
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,9 +27,16 @@ import java.util.Calendar;
 public class MonthViewActivity extends AppCompatActivity {
 
     private TextView yearMonthText;
-    private Calendar selectedDate;
+    private static Calendar selectedDate;
     private Intent mainIntent ;
     public static ArrayList<String> dateArr;
+<<<<<<< Updated upstream
+=======
+    Toolbar myToolbar;
+    private TextView toolbar_text;
+    public static ArrayList<String> WeekArr;
+
+>>>>>>> Stashed changes
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
@@ -35,15 +49,14 @@ public class MonthViewActivity extends AppCompatActivity {
     private void initWidgets(){
         yearMonthText = findViewById(R.id.YearMonthText);
         mainIntent = getIntent();
+<<<<<<< Updated upstream
         getIntentValue();
+=======
+        toolbar_text = findViewById(R.id.toolbar_text);
+        selectedDate = Calendar.getInstance();
+>>>>>>> Stashed changes
         setWeekView();
         initBtnListners();
-    }
-
-    private void getIntentValue() {
-        if(mainIntent.hasExtra("selected_Date"))
-            selectedDate = (Calendar) mainIntent.getSerializableExtra("selected_Date");
-        else selectedDate = Calendar.getInstance();
     }
 
     private void initBtnListners() {
@@ -82,8 +95,14 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         yearMonthText.setText(DateToString(selectedDate));
+<<<<<<< Updated upstream
         dateArr = setCalendarDate(selectedDate);
         getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new WeekFragment()).commit();
+=======
+        toolbar_text.setText(DateToString(selectedDate));
+        WeekArr = setWeekArr(selectedDate);
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
+>>>>>>> Stashed changes
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -117,15 +136,44 @@ public class MonthViewActivity extends AppCompatActivity {
         });
     }
 
+    public ArrayList<String> setWeekArr(Calendar date){
+        ArrayList<String> WeekArray = new ArrayList();
+        Calendar cal = (Calendar) date.clone();
+        int FirstdayOfWeek = date.get(Calendar.DATE) - cal.get(Calendar.DAY_OF_WEEK) + 1;
+        int MonthOfdate = date.get(Calendar.MONTH);
+        int LastdayOfmonth = date.getActualMaximum(Calendar.DATE);
+        Calendar Pcal,Ncal;
+        Pcal = Ncal = (Calendar) date.clone();
+        Pcal.set(Calendar.MONTH,MonthOfdate-1); Ncal.set(Calendar.MONTH,MonthOfdate+1);
+        int LastdayOfpmonth =Pcal.getActualMaximum(Calendar.DATE);
+        if (FirstdayOfWeek<1) {
+            FirstdayOfWeek = FirstdayOfWeek + LastdayOfpmonth;
+            for(int i = 0; i<7; i++) {
+                if (FirstdayOfWeek> LastdayOfpmonth) FirstdayOfWeek = 1;
+                WeekArray.add(String.valueOf(FirstdayOfWeek++));
+
+            }
+        }
+        else if (FirstdayOfWeek+6 > LastdayOfmonth)
+            for(int i = 0; i<7; i++) {
+                if (FirstdayOfWeek > LastdayOfmonth) FirstdayOfWeek = 1;
+                WeekArray.add(String.valueOf(FirstdayOfWeek++));
+             }
+        else for(int i = 0; i<7; i++) {
+                WeekArray.add(String.valueOf(FirstdayOfWeek++));
+            }
+
+        return WeekArray;
+    }
 
     // 일요일 : 0 ~ 토요일 : 6
-    public ArrayList<String> setCalendarDate(Calendar date){
+    public ArrayList<String> setCalendarDate(Calendar selectedDate){
         ArrayList <String> dateArray = new ArrayList();
-        Calendar cal = date;
+        Calendar cal = (Calendar) selectedDate.clone();
         cal.set(Calendar.DATE,1);
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
         int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
-        for (int i = 1; i <= 41; i++) {
+        for (int i = 1; i <= 42; i++) {
             if(i<= dayOfWeek || i> (lengthOfMonth + dayOfWeek))
                 dateArray.add("");
             else dateArray.add(String.valueOf(i-dayOfWeek));

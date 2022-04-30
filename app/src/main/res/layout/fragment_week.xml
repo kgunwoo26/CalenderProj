@@ -87,20 +87,35 @@
                 android:text="토"></TextView>
 
         </LinearLayout>
-        <GridView
-            android:id="@+id/week_dayGridView2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:stretchMode="columnWidth"
-            android:numColumns="7"
-            android:gravity="center"
-            android:horizontalSpacing="1dp"
-            android:verticalSpacing="1dp"
-            android:background="#9999ff"
+            android:orientation="vertical">
+            <GridView
+                android:id="@+id/week_dayGridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchMode="columnWidth"
+                android:numColumns="7"
+                android:gravity="center"
+                android:horizontalSpacing="1dp"
+                android:verticalSpacing="1dp"
+                android:layout_weight="9"
+                ></GridView>
+            <GridView
+                android:layout_weight="1"
+                android:id="@+id/week_dayGridView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchMode="columnWidth"
+                android:numColumns="7"
+                android:gravity="center"
+                android:horizontalSpacing="1dp"
+                android:verticalSpacing="1dp"
+                android:background="@color/purple_200"
+                ></GridView>
+        </LinearLayout>
 
-
-
-            ></GridView>
     </LinearLayout>
 
     </LinearLayout>
