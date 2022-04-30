@@ -2,17 +2,28 @@ package com.example.calenderproj;
 
 import static com.example.calenderproj.MonthViewActivity.dateArr;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MonthFragment extends Fragment {
+
+    private TextView yearMonthText;
+    private Calendar selectedDate;
+    private Intent mainIntent ;
+    public static ArrayList<String> dateArr;
 
     public MonthFragment() {
         // Required empty public constructor
@@ -28,9 +39,10 @@ public class MonthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_month, container, false);
-         CalendarAdapter adapter = new CalendarAdapter( getActivity().getApplicationContext(),R.layout.month_item, dateArr);
+        CalendarAdapter adapter = new CalendarAdapter( getActivity().getApplicationContext(),R.layout.month_item, dateArr);
         GridView gridView = rootView.findViewById(R.id.week_dayGridView);
         gridView.setAdapter(adapter);
         return rootView;
     }
+
 }
