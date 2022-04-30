@@ -2,6 +2,8 @@ package com.example.calenderproj;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Build;
@@ -16,7 +18,6 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,14 +32,40 @@ public class MonthViewActivity extends AppCompatActivity {
     Toolbar myToolbar;
     private TextView toolbar_text;
     public static ArrayList<String> WeekArr;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myToolbar = (Toolbar) findViewById(R.id.myToolbar);
+        setSupportActionBar(myToolbar);
         initWidgets();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.weekcal_fragment:
+                setWeekView();
+                return true;
+            case R.id.monthcal_fragment:
+               setMonthView();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
         yearMonthText = findViewById(R.id.YearMonthText);
@@ -85,8 +112,6 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         yearMonthText.setText(DateToString(selectedDate));
-        dateArr = setCalendarDate(selectedDate);
-        getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new WeekFragment()).commit();
         toolbar_text.setText(DateToString(selectedDate));
         WeekArr = setWeekArr(selectedDate);
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
@@ -95,8 +120,9 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
+        toolbar_text.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
-        getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new MonthFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
 //        mGridView.setAdapter(adapter);

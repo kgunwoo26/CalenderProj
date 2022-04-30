@@ -28,6 +28,7 @@ public class WeekFragment extends Fragment {
         week_CalendarAdapter adapter = new week_CalendarAdapter(getActivity().getApplicationContext(),R.layout.week_item, WeekArr);
         GridView gridView = rootView.findViewById(R.id.week_dayGridView);
         gridView.setAdapter(adapter);
+
         return rootView;
     }
 }

@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MonthFragment"
-    android:background="#eeaa66">
+    android:background="#eeaa66"
+    android:id="@+id/month_frag"
+    >
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
