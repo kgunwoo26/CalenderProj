@@ -25,13 +25,8 @@ public class WeekFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_week, container, false);
-<<<<<<< Updated upstream
-        CalendarAdapter adapter = new CalendarAdapter(getActivity().getApplicationContext(),R.layout.item, dateArr);
-        GridView gridView = rootView.findViewById(R.id.week_dayGridView2);
-=======
         week_CalendarAdapter adapter = new week_CalendarAdapter(getActivity().getApplicationContext(),R.layout.week_item, WeekArr);
         GridView gridView = rootView.findViewById(R.id.week_dayGridView);
->>>>>>> Stashed changes
         gridView.setAdapter(adapter);
         return rootView;
     }

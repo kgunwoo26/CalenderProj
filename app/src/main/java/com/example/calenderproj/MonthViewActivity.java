@@ -6,19 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-<<<<<<< Updated upstream
-=======
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
->>>>>>> Stashed changes
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,13 +28,9 @@ public class MonthViewActivity extends AppCompatActivity {
     private static Calendar selectedDate;
     private Intent mainIntent ;
     public static ArrayList<String> dateArr;
-<<<<<<< Updated upstream
-=======
     Toolbar myToolbar;
     private TextView toolbar_text;
     public static ArrayList<String> WeekArr;
-
->>>>>>> Stashed changes
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
@@ -49,12 +43,8 @@ public class MonthViewActivity extends AppCompatActivity {
     private void initWidgets(){
         yearMonthText = findViewById(R.id.YearMonthText);
         mainIntent = getIntent();
-<<<<<<< Updated upstream
-        getIntentValue();
-=======
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
->>>>>>> Stashed changes
         setWeekView();
         initBtnListners();
     }
@@ -95,14 +85,11 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         yearMonthText.setText(DateToString(selectedDate));
-<<<<<<< Updated upstream
         dateArr = setCalendarDate(selectedDate);
         getSupportFragmentManager().beginTransaction().add(R.id.dayGridView, new WeekFragment()).commit();
-=======
         toolbar_text.setText(DateToString(selectedDate));
         WeekArr = setWeekArr(selectedDate);
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
->>>>>>> Stashed changes
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
