@@ -87,7 +87,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <GridView
-                    android:id="@+id/week_dayGridView"
+                    android:id="@+id/week_dayGridView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:stretchMode="columnWidth"
@@ -104,30 +104,31 @@
 
 
     </LinearLayout>
+
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        >
-        <GridView
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
-            android:numColumns="1">
-        </GridView>
-        <GridView
-            android:layout_weight="1"
-            android:id="@+id/week_dayGridView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchMode="columnWidth"
-            android:numColumns="7"
-            android:gravity="center"
-            android:horizontalSpacing="1dp"
-            android:verticalSpacing="1dp"
-            android:background="@color/purple_200"
-            ></GridView>
 
-        </GridLayout>
+        >
+    <GridView
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:numColumns="1">
+    </GridView>
+
+    <GridView
+        android:id="@+id/week_dayGridView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/purple_200"
+        android:numColumns="7"
+        >
+    </GridView>
+    </GridLayout>
+
+
+
 
 
 

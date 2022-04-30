@@ -32,6 +32,7 @@ public class MonthViewActivity extends AppCompatActivity {
     Toolbar myToolbar;
     private TextView toolbar_text;
     public static ArrayList<String> WeekArr;
+    public static ArrayList<String> TimeArr;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -128,7 +129,9 @@ public class MonthViewActivity extends AppCompatActivity {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
         WeekArr = setWeekArr(selectedDate);
+        setTimeView();
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -143,6 +146,10 @@ public class MonthViewActivity extends AppCompatActivity {
 //        mGridView.setAdapter(adapter);
 //        printToast(mGridView,adapter);
 
+    }
+
+    private void setTimeView(){
+        TimeArr = setTimeArr();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -162,6 +169,15 @@ public class MonthViewActivity extends AppCompatActivity {
                         selected_year+"."+selected_month+"."+selected_date , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public  ArrayList<String> setTimeArr(){
+        ArrayList<String> TimeArr = new ArrayList();
+        for(int i=0; i<24; i++){
+            for(int j=0; j<7; j++)
+                TimeArr.add(String.valueOf(i)+","+String.valueOf(j));
+        }
+        return TimeArr;
     }
 
     public ArrayList<String> setWeekArr(Calendar date){
