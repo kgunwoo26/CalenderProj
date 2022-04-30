@@ -3,12 +3,12 @@ package com.example.calenderproj;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +41,7 @@ public class MonthViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
+
         initWidgets();
     }
 
@@ -68,14 +69,16 @@ public class MonthViewActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
-        yearMonthText = findViewById(R.id.YearMonthText);
-        mainIntent = getIntent();
+        yearMonthText = findViewById(R.id.YearMonthText); //곧사라짐
+        mainIntent = getIntent(); //곧사라짐
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
-        setWeekView();
+
+        setMonthView();
         initBtnListners();
     }
 
+    //곧 사라지는 메소드
     private void initBtnListners() {
         Button preButton = (Button)findViewById(R.id.preMonthBtn);
         Button nextButton = (Button)findViewById(R.id.nextMonthBtn);
@@ -121,7 +124,10 @@ public class MonthViewActivity extends AppCompatActivity {
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
-        dateArr = setCalendarDate(selectedDate);
+        dateArr = setMonthArr(selectedDate);
+        //ViewPager2 vpPager = findViewById(R.id.vpPager);
+        //FragmentStateAdapter adapter = new PagerAdapter(this);
+        //vpPager.setAdapter(adapter);
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
@@ -136,7 +142,7 @@ public class MonthViewActivity extends AppCompatActivity {
         return dataFormat.format(date.getTime());
     }
 
-    private void printToast(GridView mGridView, CalendarAdapter adapter) {
+    private void printToast(GridView mGridView, month_CalendarAdapter adapter) {
         int selected_month = selectedDate.get(Calendar.MONTH) + 1;
         int selected_year = selectedDate.get(Calendar.YEAR);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -180,7 +186,7 @@ public class MonthViewActivity extends AppCompatActivity {
     }
 
     // 일요일 : 0 ~ 토요일 : 6
-    public ArrayList<String> setCalendarDate(Calendar selectedDate){
+    public ArrayList<String> setMonthArr(Calendar selectedDate){
         ArrayList <String> dateArray = new ArrayList();
         Calendar cal = (Calendar) selectedDate.clone();
         cal.set(Calendar.DATE,1);
