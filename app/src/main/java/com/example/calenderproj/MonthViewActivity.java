@@ -42,6 +42,17 @@ public class MonthViewActivity extends AppCompatActivity {
         myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
 
+        ViewPager2 vpPager = findViewById(R.id.vpPager);
+        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+        vpPager.setAdapter(adapter);
+        vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                Toast.makeText(MonthViewActivity.this,
+                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         initWidgets();
     }
 
@@ -125,9 +136,7 @@ public class MonthViewActivity extends AppCompatActivity {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
         dateArr = setMonthArr(selectedDate);
-        //ViewPager2 vpPager = findViewById(R.id.vpPager);
-        //FragmentStateAdapter adapter = new PagerAdapter(this);
-        //vpPager.setAdapter(adapter);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
