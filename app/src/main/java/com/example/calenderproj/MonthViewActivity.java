@@ -101,7 +101,6 @@ public class MonthViewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int month = selectedDate.get(Calendar.MONTH);
                 selectedDate.set(Calendar.MONTH,month-1);
-                refreshActivity();
             }
         });
 
@@ -111,7 +110,6 @@ public class MonthViewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int month = selectedDate.get(Calendar.MONTH);
                 selectedDate.set(Calendar.MONTH,month+1);
-                refreshActivity();
             }
         });
     }
