@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class TimeAdapter extends BaseAdapter{
+public class SideAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> mCalendarList;
     private int mResource;
     private TextView ViewText;
 
-    public TimeAdapter(Context context,int resource, ArrayList<String> CalendarList) {
+    public SideAdapter(Context context,int resource, ArrayList<String> CalendarList) {
         mContext = context;
         mCalendarList = CalendarList;
         mResource = resource;
@@ -43,10 +43,9 @@ public class TimeAdapter extends BaseAdapter{
         }
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight()*0.125);
-//        TextView day = convertView.findViewById(R.id.text_2);
-//        day.setText(getItem(position));
+        TextView day = convertView.findViewById(R.id.text_2);
+        day.setText(getItem(position));
         return convertView;
     }
 
 }
-

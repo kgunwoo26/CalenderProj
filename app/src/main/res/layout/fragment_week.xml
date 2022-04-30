@@ -105,13 +105,14 @@
 
     </LinearLayout>
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
 
         >
     <GridView
+        android:id="@+id/week_dayGridView4"
         android:layout_width="25dp"
         android:layout_height="match_parent"
         android:numColumns="1">
@@ -123,9 +124,12 @@
         android:layout_height="match_parent"
         android:background="@color/purple_200"
         android:numColumns="7"
+        android:padding="1dp"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
         >
     </GridView>
-    </GridLayout>
+    </LinearLayout>
 
 
 

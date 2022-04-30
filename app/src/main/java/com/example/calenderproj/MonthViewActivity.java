@@ -33,6 +33,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private TextView toolbar_text;
     public static ArrayList<String> WeekArr;
     public static ArrayList<String> TimeArr;
+    public static ArrayList<String> SideArr;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -124,12 +125,17 @@ public class MonthViewActivity extends AppCompatActivity {
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
 // 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
 
+    private void setSideView() {
+        SideArr = setSideArr();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
         WeekArr = setWeekArr(selectedDate);
         setTimeView();
+        setSideView();
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
 
     }
@@ -169,6 +175,13 @@ public class MonthViewActivity extends AppCompatActivity {
                         selected_year+"."+selected_month+"."+selected_date , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public  ArrayList<String> setSideArr() {
+        ArrayList<String> SideArr = new ArrayList();
+        for(int i=0; i<24; i++){
+            SideArr.add(String.valueOf(i));
+        }
+        return SideArr;
     }
 
     public  ArrayList<String> setTimeArr(){
