@@ -118,7 +118,7 @@ public class MonthViewActivity extends AppCompatActivity {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
         dateArr = setCalendarDate(selectedDate);
-        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

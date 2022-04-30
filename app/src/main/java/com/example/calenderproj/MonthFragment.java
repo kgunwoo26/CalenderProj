@@ -20,11 +20,6 @@ import java.util.Calendar;
 
 public class MonthFragment extends Fragment {
 
-    private TextView yearMonthText;
-    private Calendar selectedDate;
-    private Intent mainIntent ;
-    public static ArrayList<String> dateArr;
-
     public MonthFragment() {
         // Required empty public constructor
     }
