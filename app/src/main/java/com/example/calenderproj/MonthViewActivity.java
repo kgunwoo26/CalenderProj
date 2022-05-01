@@ -76,6 +76,7 @@ public class MonthViewActivity extends AppCompatActivity {
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
         setMonthView();
+        //resetMonthView();
     }
 
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
@@ -130,40 +131,9 @@ public class MonthViewActivity extends AppCompatActivity {
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if(position == 0){
-                    selectedDate.set(Calendar.MONTH,-1);
-                    pdateArr = setMonthArr(selectedDate,-1);
-                    dateArr = setMonthArr(selectedDate,0);
-                    ndateArr = setMonthArr(selectedDate,1);
-                    ViewPager2 vpPager = findViewById(R.id.vpPager);
-                   // FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-                    vpPager.setAdapter(adapter);
-
-                    //다시 뷰페이지 설정
-                }
-                else if(position ==1){
-                    pdateArr = setMonthArr(selectedDate,-1);
-                    dateArr = setMonthArr(selectedDate,0);
-                    ndateArr = setMonthArr(selectedDate,1);
-                    ViewPager2 vpPager = findViewById(R.id.vpPager);
-                    //FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-                    vpPager.setAdapter(adapter);
-                }
-                else{
-                    selectedDate.set(Calendar.MONTH,+1);
-                    pdateArr = setMonthArr(selectedDate,-1);
-                    dateArr = setMonthArr(selectedDate,0);
-                    ndateArr = setMonthArr(selectedDate,1);
-                    ViewPager2 vpPager = findViewById(R.id.vpPager);
-                   // FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-                    vpPager.setAdapter(adapter);
-                }
-
-//                Toast.makeText(MonthViewActivity.this,
-//                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+              Toast.makeText(MonthViewActivity.this,
+                       "Selected page position: " + position, Toast.LENGTH_SHORT).show();
                setToolbar_text(position-1);
-
-
             }
         });
         //getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
@@ -172,6 +142,35 @@ public class MonthViewActivity extends AppCompatActivity {
 //        mGridView.setAdapter(adapter);
 //        printToast(mGridView,adapter);
 
+    }
+    private void resetMonthView(int postion){
+        if(position == 0){
+            selectedDate.set(Calendar.MONTH,-1);
+            pdateArr = setMonthArr(selectedDate,-1);
+            dateArr = setMonthArr(selectedDate,0);
+            ndateArr = setMonthArr(selectedDate,1);
+            ViewPager2 vpPager = findViewById(R.id.vpPager);
+            FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+            vpPager.setAdapter(adapter);
+
+        }
+        else if(position ==1){
+            pdateArr = setMonthArr(selectedDate,-1);
+            dateArr = setMonthArr(selectedDate,0);
+            ndateArr = setMonthArr(selectedDate,1);
+            ViewPager2 vpPager = findViewById(R.id.vpPager);
+            FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+            vpPager.setAdapter(adapter);
+        }
+        else{
+            selectedDate.set(Calendar.MONTH,+1);
+            pdateArr = setMonthArr(selectedDate,-1);
+            dateArr = setMonthArr(selectedDate,0);
+            ndateArr = setMonthArr(selectedDate,1);
+            ViewPager2 vpPager = findViewById(R.id.vpPager);
+            FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+            vpPager.setAdapter(adapter);
+        }
     }
 
     private void setTimeView(){
