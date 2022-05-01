@@ -94,9 +94,9 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         toolbar_text.setText(DateToString(selectedDate));
-        pWeekArr = setWeekArr(selectedDate,-1);
+        pWeekArr = setWeekArr(selectedDate,-7);
         WeekArr = setWeekArr(selectedDate,0);
-        nWeekArr = setWeekArr(selectedDate,1);
+        nWeekArr = setWeekArr(selectedDate,7);
         setTimeView();
         setSideView();
 
@@ -186,12 +186,12 @@ public class MonthViewActivity extends AppCompatActivity {
     public ArrayList<String> setWeekArr(Calendar date, int month){
         ArrayList<String> WeekArray = new ArrayList();
         Calendar cal = (Calendar) date.clone();
-        cal.add(Calendar.MONTH,month);
-        int FirstdayOfWeek = date.get(Calendar.DATE) - cal.get(Calendar.DAY_OF_WEEK) + 1;
-        int MonthOfdate = date.get(Calendar.MONTH);
-        int LastdayOfmonth = date.getActualMaximum(Calendar.DATE);
+        cal.add(Calendar.DATE,month);
+        int FirstdayOfWeek = cal.get(Calendar.DATE) - cal.get(Calendar.DAY_OF_WEEK) + 1;
+        int MonthOfdate = cal.get(Calendar.MONTH);
+        int LastdayOfmonth = cal.getActualMaximum(Calendar.DATE);
         Calendar Pcal,Ncal;
-        Pcal = Ncal = (Calendar) date.clone();
+        Pcal = Ncal = (Calendar) cal.clone();
         Pcal.set(Calendar.MONTH,MonthOfdate-1); Ncal.set(Calendar.MONTH,MonthOfdate+1);
         int LastdayOfpmonth =Pcal.getActualMaximum(Calendar.DATE);
         if (FirstdayOfWeek<1) {
@@ -199,7 +199,6 @@ public class MonthViewActivity extends AppCompatActivity {
             for(int i = 0; i<7; i++) {
                 if (FirstdayOfWeek> LastdayOfpmonth) FirstdayOfWeek = 1;
                 WeekArray.add(String.valueOf(FirstdayOfWeek++));
-
             }
         }
         else if (FirstdayOfWeek+6 > LastdayOfmonth)
