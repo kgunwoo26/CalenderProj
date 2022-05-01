@@ -6,9 +6,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,11 +28,11 @@ import java.util.Calendar;
 public class MonthViewActivity extends AppCompatActivity {
 
     private TextView yearMonthText;
-    private static Calendar selectedDate;
+    public static Calendar selectedDate;
     private Intent mainIntent ;
-    public static ArrayList<String> dateArr;
+    public static ArrayList<String> pdateArr,dateArr,ndateArr;
     Toolbar myToolbar;
-    private TextView toolbar_text;
+    private static TextView toolbar_text;
     public static ArrayList<String> WeekArr;
     public static ArrayList<String> TimeArr;
     public static ArrayList<String> SideArr;
@@ -44,17 +46,6 @@ public class MonthViewActivity extends AppCompatActivity {
         myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
         initWidgets();
-        ViewPager2 vpPager = findViewById(R.id.vpPager);
-        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-        vpPager.setAdapter(adapter);
-        vpPager.setCurrentItem(1);
-        vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                Toast.makeText(MonthViewActivity.this,
-                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 
@@ -64,6 +55,7 @@ public class MonthViewActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -86,7 +78,6 @@ public class MonthViewActivity extends AppCompatActivity {
         mainIntent = getIntent(); //곧사라짐
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
-
         setMonthView();
         initBtnListners();
     }
@@ -124,6 +115,12 @@ public class MonthViewActivity extends AppCompatActivity {
     }
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
 // 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void setToolbar_text(int position){
+        selectedDate.add(Calendar.MONTH,position);
+        Log.e("month",String.valueOf(selectedDate.get(Calendar.MONTH)));
+        toolbar_text.setText(DateToString(selectedDate));
+    }
 
     private void setSideView() {
         SideArr = setSideArr();
@@ -144,9 +141,22 @@ public class MonthViewActivity extends AppCompatActivity {
     private void setMonthView() {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
-        dateArr = setMonthArr(selectedDate);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
+        pdateArr = setMonthArr(selectedDate,-1);
+        dateArr = setMonthArr(selectedDate,0);
+        ndateArr = setMonthArr(selectedDate,1);
+        ViewPager2 vpPager = findViewById(R.id.vpPager);
+        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+        vpPager.setAdapter(adapter);
+        vpPager.setCurrentItem(1);
+        vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                Toast.makeText(MonthViewActivity.this,
+                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+                setToolbar_text(position-1);
+            }
+        });
+        //getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
 //        mGridView.setAdapter(adapter);
@@ -159,7 +169,7 @@ public class MonthViewActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private String DateToString(Calendar date){
+    private static String DateToString(Calendar date){
         SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월");
         return dataFormat.format(date.getTime());
     }
@@ -224,9 +234,10 @@ public class MonthViewActivity extends AppCompatActivity {
     }
 
     // 일요일 : 0 ~ 토요일 : 6
-    public ArrayList<String> setMonthArr(Calendar selectedDate){
+    public ArrayList<String> setMonthArr(Calendar selectedDate,int month){
         ArrayList <String> dateArray = new ArrayList();
         Calendar cal = (Calendar) selectedDate.clone();
+        cal.add(Calendar.MONTH,month);
         cal.set(Calendar.DATE,1);
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
         int lengthOfMonth = cal.getActualMaximum(Calendar.DATE);
