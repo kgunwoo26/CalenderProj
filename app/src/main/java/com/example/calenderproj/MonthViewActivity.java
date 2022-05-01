@@ -76,6 +76,7 @@ public class MonthViewActivity extends AppCompatActivity {
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
         setMonthView();
+        resetMonthView();
     }
 
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
@@ -130,9 +131,26 @@ public class MonthViewActivity extends AppCompatActivity {
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(MonthViewActivity.this,
-                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-                setToolbar_text(position-1);
+                if(position == 0){
+                    //얘가 포지션값이 1로됨. (이전새로생성 -> 0)/(0 -> 1) / (1 ->2)
+                    //이로 인한 pdateArr, dateArr, ndateArr 다시 설정
+                    //다시 뷰페이지 설정
+
+                }
+                else if(position ==1){
+                    //변화없음
+                }
+                else{
+                    //얘가 포지션값이 1로됨. (1 -> 0)/(2 -> 1) / (다음새로생성 ->2)
+                    //이로 인한 pdateArr, dateArr, ndateArr 다시 설정
+                    //다시 뷰페이지 설정
+                }
+
+//                Toast.makeText(MonthViewActivity.this,
+//                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+               setToolbar_text(position-1);
+
+
             }
         });
         //getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
@@ -140,6 +158,11 @@ public class MonthViewActivity extends AppCompatActivity {
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
 //        mGridView.setAdapter(adapter);
 //        printToast(mGridView,adapter);
+
+    }
+//monthview를 새로운 위치에서 다시 만드는 메소드
+    private void resetMonthView(){
+
 
     }
 

@@ -38,7 +38,8 @@ public class MonthFragment extends Fragment {
             DateArr = (ArrayList<String>) pdateArr.clone();
         else if (num ==1)
             DateArr = (ArrayList<String>) dateArr.clone();
-        else DateArr = (ArrayList<String>) ndateArr.clone();
+        else
+            DateArr = (ArrayList<String>) ndateArr.clone();
         month_CalendarAdapter adapter = new month_CalendarAdapter( getActivity().getApplicationContext(),R.layout.month_item, DateArr);
         GridView gridView = rootView.findViewById(R.id.week_dayGridView);
 

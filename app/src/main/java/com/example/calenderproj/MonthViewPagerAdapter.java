@@ -25,14 +25,12 @@ public class MonthViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 MonthFragment preMonthFrag = new MonthFragment(0);
                 return preMonthFrag;
-               // MonthFragment.newInstance(month-1);
             case 1:
                 MonthFragment MonthFrag = new MonthFragment(1);
                 return MonthFrag;
             case 2:
                 MonthFragment nextMonthFrag = new MonthFragment(2);
                 return nextMonthFrag;
-            // MonthFragment.newInstance(month+1);
             default:
                 return null;
         }
