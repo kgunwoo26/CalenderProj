@@ -3,6 +3,7 @@ package com.example.calenderproj;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -35,7 +37,8 @@ public class MonthViewActivity extends AppCompatActivity {
     public static ArrayList<String> pWeekArr,WeekArr,nWeekArr;
     public static ArrayList<String> TimeArr;
     public static ArrayList<String> SideArr;
-
+    private ViewPager2 vpPager;
+    private int occured_position;
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
@@ -124,8 +127,18 @@ public class MonthViewActivity extends AppCompatActivity {
         pdateArr = setMonthArr(selectedDate,-1);
         dateArr = setMonthArr(selectedDate,0);
         ndateArr = setMonthArr(selectedDate,1);
+
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        MonthFragment frag1 = new MonthFragment(0);
+        fragments.add(frag1);
+        MonthFragment frag2 = new MonthFragment(1);
+        fragments.add(frag2);
+        MonthFragment frag3 = new MonthFragment(2);
+        fragments.add(frag3);
+
         ViewPager2 vpPager = findViewById(R.id.vpPager);
-        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+
+        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this,fragments);
         vpPager.setAdapter(adapter);
         vpPager.setCurrentItem(1);
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -135,7 +148,9 @@ public class MonthViewActivity extends AppCompatActivity {
                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
                setToolbar_text(position-1);
             }
+
         });
+
         //getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
@@ -143,15 +158,17 @@ public class MonthViewActivity extends AppCompatActivity {
 //        printToast(mGridView,adapter);
 
     }
-    private void resetMonthView(int postion){
+    @RequiresApi(api = Build.VERSION_CODES.O)
+
+    private void resetMonthView(int position){
         if(position == 0){
             selectedDate.set(Calendar.MONTH,-1);
             pdateArr = setMonthArr(selectedDate,-1);
             dateArr = setMonthArr(selectedDate,0);
             ndateArr = setMonthArr(selectedDate,1);
             ViewPager2 vpPager = findViewById(R.id.vpPager);
-            FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-            vpPager.setAdapter(adapter);
+     //       FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+      //      vpPager.setAdapter(adapter);
 
         }
         else if(position ==1){
@@ -159,8 +176,8 @@ public class MonthViewActivity extends AppCompatActivity {
             dateArr = setMonthArr(selectedDate,0);
             ndateArr = setMonthArr(selectedDate,1);
             ViewPager2 vpPager = findViewById(R.id.vpPager);
-            FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-            vpPager.setAdapter(adapter);
+     //       FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+  //          vpPager.setAdapter(adapter);
         }
         else{
             selectedDate.set(Calendar.MONTH,+1);
@@ -168,8 +185,8 @@ public class MonthViewActivity extends AppCompatActivity {
             dateArr = setMonthArr(selectedDate,0);
             ndateArr = setMonthArr(selectedDate,1);
             ViewPager2 vpPager = findViewById(R.id.vpPager);
-            FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-            vpPager.setAdapter(adapter);
+      //      FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
+      //      vpPager.setAdapter(adapter);
         }
     }
 
