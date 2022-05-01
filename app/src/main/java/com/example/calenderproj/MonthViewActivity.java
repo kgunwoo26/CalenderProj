@@ -27,13 +27,12 @@ import java.util.Calendar;
 
 public class MonthViewActivity extends AppCompatActivity {
 
-    private TextView yearMonthText;
     public static Calendar selectedDate;
     private Intent mainIntent ;
     public static ArrayList<String> pdateArr,dateArr,ndateArr;
     Toolbar myToolbar;
     private static TextView toolbar_text;
-    public static ArrayList<String> WeekArr;
+    public static ArrayList<String> pWeekArr,WeekArr,nWeekArr;
     public static ArrayList<String> TimeArr;
     public static ArrayList<String> SideArr;
 
@@ -74,45 +73,11 @@ public class MonthViewActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
-        yearMonthText = findViewById(R.id.YearMonthText); //곧사라짐
-        mainIntent = getIntent(); //곧사라짐
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
         setMonthView();
-        initBtnListners();
     }
 
-    //곧 사라지는 메소드
-    private void initBtnListners() {
-        Button preButton = (Button)findViewById(R.id.preMonthBtn);
-        Button nextButton = (Button)findViewById(R.id.nextMonthBtn);
-        preButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                int month = selectedDate.get(Calendar.MONTH);
-                selectedDate.set(Calendar.MONTH,month-1);
-                refreshActivity();
-            }
-        });
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                int month = selectedDate.get(Calendar.MONTH);
-                selectedDate.set(Calendar.MONTH,month+1);
-                refreshActivity();
-            }
-        });
-    }
-    private void refreshActivity(){
-//        Intent intent = new Intent(MonthViewActivity.this, MonthViewActivity.class);
-//        intent.putExtra("selected_Date",selectedDate);
-//        startActivity(intent);
-//        finish();
-
-    }
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
 // 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -128,18 +93,32 @@ public class MonthViewActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
-        yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
-        WeekArr = setWeekArr(selectedDate);
+        pWeekArr = setWeekArr(selectedDate,-1);
+        WeekArr = setWeekArr(selectedDate,0);
+        nWeekArr = setWeekArr(selectedDate,1);
         setTimeView();
         setSideView();
-        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
+
+        ViewPager2 vpPager = findViewById(R.id.vpPager);
+        FragmentStateAdapter adapter = new WeekViewPagerAdapter(this);
+        vpPager.setAdapter(adapter);
+        vpPager.setCurrentItem(1);
+        vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                Toast.makeText(MonthViewActivity.this,
+                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+                setToolbar_text(position-1);
+            }
+        });
+
+        //getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
-        yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
         pdateArr = setMonthArr(selectedDate,-1);
         dateArr = setMonthArr(selectedDate,0);
@@ -198,14 +177,16 @@ public class MonthViewActivity extends AppCompatActivity {
         ArrayList<String> TimeArr = new ArrayList();
         for(int i=0; i<24; i++){
             for(int j=0; j<7; j++)
-                TimeArr.add(String.valueOf(i)+","+String.valueOf(j));
+                TimeArr.add("");
+               // TimeArr.add(String.valueOf(i)+","+String.valueOf(j));
         }
         return TimeArr;
     }
 
-    public ArrayList<String> setWeekArr(Calendar date){
+    public ArrayList<String> setWeekArr(Calendar date, int month){
         ArrayList<String> WeekArray = new ArrayList();
         Calendar cal = (Calendar) date.clone();
+        cal.add(Calendar.MONTH,month);
         int FirstdayOfWeek = date.get(Calendar.DATE) - cal.get(Calendar.DAY_OF_WEEK) + 1;
         int MonthOfdate = date.get(Calendar.MONTH);
         int LastdayOfmonth = date.getActualMaximum(Calendar.DATE);

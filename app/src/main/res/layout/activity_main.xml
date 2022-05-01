@@ -21,6 +21,7 @@
             >
 
             <androidx.appcompat.widget.Toolbar
+             app:popupTheme="@style/Theme.CalenderProj"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/myToolbar"
@@ -39,32 +40,32 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            tools:ignore="MissingConstraints">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:gravity="center"-->
+<!--            tools:ignore="MissingConstraints">-->
 
-            <Button
-                android:layout_width="98dp"
-                android:layout_height="wrap_content"
-                android:text="이전"
-                android:id="@+id/preMonthBtn"></Button>
+<!--            <Button-->
+<!--                android:layout_width="98dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="이전"-->
+<!--                android:id="@+id/preMonthBtn"></Button>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_margin="30dp"
-                android:id="@+id/YearMonthText"
-                android:text="2021년 3월"></TextView>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_margin="30dp"-->
+<!--                android:id="@+id/YearMonthText"-->
+<!--                android:text="2021년 3월"></TextView>-->
 
-            <Button
-                android:layout_width="98dp"
-                android:layout_height="wrap_content"
-                android:text="다음"
-                android:id="@+id/nextMonthBtn"></Button>
+<!--            <Button-->
+<!--                android:layout_width="98dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="다음"-->
+<!--                android:id="@+id/nextMonthBtn"></Button>-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
 
         <LinearLayout
