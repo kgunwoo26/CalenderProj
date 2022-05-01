@@ -32,6 +32,8 @@ public class MonthViewActivity extends AppCompatActivity {
     Toolbar myToolbar;
     private TextView toolbar_text;
     public static ArrayList<String> WeekArr;
+    public static ArrayList<String> TimeArr;
+    public static ArrayList<String> SideArr;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -41,10 +43,11 @@ public class MonthViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
-
+        initWidgets();
         ViewPager2 vpPager = findViewById(R.id.vpPager);
         FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
         vpPager.setAdapter(adapter);
+        vpPager.setCurrentItem(1);
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -53,7 +56,6 @@ public class MonthViewActivity extends AppCompatActivity {
             }
         });
 
-        initWidgets();
     }
 
     @Override
@@ -123,12 +125,19 @@ public class MonthViewActivity extends AppCompatActivity {
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
 // 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
 
+    private void setSideView() {
+        SideArr = setSideArr();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         yearMonthText.setText(DateToString(selectedDate));
         toolbar_text.setText(DateToString(selectedDate));
         WeekArr = setWeekArr(selectedDate);
+        setTimeView();
+        setSideView();
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -143,6 +152,10 @@ public class MonthViewActivity extends AppCompatActivity {
 //        mGridView.setAdapter(adapter);
 //        printToast(mGridView,adapter);
 
+    }
+
+    private void setTimeView(){
+        TimeArr = setTimeArr();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -162,6 +175,22 @@ public class MonthViewActivity extends AppCompatActivity {
                         selected_year+"."+selected_month+"."+selected_date , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public  ArrayList<String> setSideArr() {
+        ArrayList<String> SideArr = new ArrayList();
+        for(int i=0; i<24; i++){
+            SideArr.add(String.valueOf(i));
+        }
+        return SideArr;
+    }
+
+    public  ArrayList<String> setTimeArr(){
+        ArrayList<String> TimeArr = new ArrayList();
+        for(int i=0; i<24; i++){
+            for(int j=0; j<7; j++)
+                TimeArr.add(String.valueOf(i)+","+String.valueOf(j));
+        }
+        return TimeArr;
     }
 
     public ArrayList<String> setWeekArr(Calendar date){

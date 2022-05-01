@@ -8,9 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.Calendar;
 
 public class MonthViewPagerAdapter extends FragmentStateAdapter {
-    private static int NUM_ITEMS=2;
-    private Calendar selectedDate = Calendar.getInstance();
-    private int month = selectedDate.get(Calendar.MONTH);
+    private static int NUM_ITEMS=3;
     public MonthViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -24,6 +22,9 @@ public class MonthViewPagerAdapter extends FragmentStateAdapter {
                 return preMonthFrag;
                // MonthFragment.newInstance(month-1);
             case 1:
+                MonthFragment MonthFrag = new MonthFragment();
+                return MonthFrag;
+            case 2:
                 MonthFragment nextMonthFrag = new MonthFragment();
                 return nextMonthFrag;
             // MonthFragment.newInstance(month+1);

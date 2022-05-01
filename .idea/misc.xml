@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.4722222222222222" />
         <entry key="../../../Library/Android/sdk/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.14488348530901723" />
         <entry key="..\:/Users/hyuks/AndroidStudioProjects/CalenderProj/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Users/hyuks/AndroidStudioProjects/CalenderProj/app/src/main/res/layout/fragment_month.xml" value="0.1490036231884058" />
@@ -18,12 +19,13 @@
         <entry key="..\:/Users/user/Documents/GitHub/CalenderProj/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/user/Documents/GitHub/CalenderProj/app/src/main/res/layout/fragment_week.xml" value="0.36614583333333334" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.159" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_month.xml" value="0.2540526849037487" />
-        <entry key="app/src/main/res/layout/fragment_week.xml" value="0.2540526849037487" />
+        <entry key="app/src/main/res/layout/fragment_week.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item.xml" value="0.2540526849037487" />
         <entry key="app/src/main/res/layout/item2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/month_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/side_item.xml" value="0.2540526849037487" />
         <entry key="app/src/main/res/layout/week_item.xml" value="0.2644927536231884" />
       </map>
     </option>
