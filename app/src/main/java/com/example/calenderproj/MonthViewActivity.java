@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Deque;
 
 public class MonthViewActivity extends AppCompatActivity {
 
@@ -37,8 +39,10 @@ public class MonthViewActivity extends AppCompatActivity {
     public static ArrayList<String> pWeekArr,WeekArr,nWeekArr;
     public static ArrayList<String> TimeArr;
     public static ArrayList<String> SideArr;
+    public static Deque<ArrayList> deque;
     private ViewPager2 vpPager;
-    private int occured_position;
+    private GridView week_dayGridView3;
+    private GridView week_dayGridView4;
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
@@ -49,6 +53,22 @@ public class MonthViewActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         initWidgets();
 
+    }
+
+    public void SynchronizeScroll(){
+        week_dayGridView3 = findViewById(R.id.week_dayGridView3);
+        week_dayGridView4 = findViewById(R.id.week_dayGridView4);
+        week_dayGridView4.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
     }
 
     @Override
@@ -127,18 +147,8 @@ public class MonthViewActivity extends AppCompatActivity {
         pdateArr = setMonthArr(selectedDate,-1);
         dateArr = setMonthArr(selectedDate,0);
         ndateArr = setMonthArr(selectedDate,1);
-
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        MonthFragment frag1 = new MonthFragment(0);
-        fragments.add(frag1);
-        MonthFragment frag2 = new MonthFragment(1);
-        fragments.add(frag2);
-        MonthFragment frag3 = new MonthFragment(2);
-        fragments.add(frag3);
-
         ViewPager2 vpPager = findViewById(R.id.vpPager);
-
-        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this,fragments);
+        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
         vpPager.setAdapter(adapter);
         vpPager.setCurrentItem(1);
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

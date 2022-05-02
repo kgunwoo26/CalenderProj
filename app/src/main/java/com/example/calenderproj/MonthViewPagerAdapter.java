@@ -9,26 +9,35 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MonthViewPagerAdapter extends FragmentStateAdapter {
-    private ArrayList<Fragment> mFragments;
-    public MonthViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, ArrayList list) {
+    private static int NUM_ITEMS=3;
+    public MonthViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        this.mFragments = list;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return mFragments.get(position);
+        switch (position) {
+            case 0:
+                MonthFragment preMonthFrag = new MonthFragment(0);
+                return preMonthFrag;
+            case 1:
+                MonthFragment MonthFrag = new MonthFragment(1);
+                return MonthFrag;
+            case 2:
+                MonthFragment nextMonthFrag = new MonthFragment(2);
+                return nextMonthFrag;
+            default:
+                return null;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mFragments.size();
+        return NUM_ITEMS;
     }
 }
