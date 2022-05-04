@@ -77,6 +77,9 @@
     android:stretchMode="columnWidth"
     android:numColumns="7"
     android:gravity="center"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
+        android:padding="1dp"
     android:background="#eeaa66"
     ></GridView>
 </LinearLayout>

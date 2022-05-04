@@ -11,9 +11,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.Calendar;
 
-public class MonthViewPagerAdapter extends FragmentStateAdapter {
+public class WeekViewPagerAdapter extends FragmentStateAdapter {
     private static int NUM_ITEMS=3;
-    public MonthViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public WeekViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -23,14 +23,16 @@ public class MonthViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                MonthFragment preMonthFrag = new MonthFragment(0);
-                return preMonthFrag;
+                WeekFragment preWeekFrag = new WeekFragment(0);
+                return preWeekFrag;
+            // MonthFragment.newInstance(month-1);
             case 1:
-                MonthFragment MonthFrag = new MonthFragment(1);
-                return MonthFrag;
+                WeekFragment WeekFrag = new WeekFragment(1);
+                return WeekFrag;
             case 2:
-                MonthFragment nextMonthFrag = new MonthFragment(2);
-                return nextMonthFrag;
+                WeekFragment nextWeekFrag = new WeekFragment(2);
+                return nextWeekFrag;
+            // MonthFragment.newInstance(month+1);
             default:
                 return null;
         }
