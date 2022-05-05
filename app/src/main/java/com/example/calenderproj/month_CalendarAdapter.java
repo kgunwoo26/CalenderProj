@@ -39,6 +39,7 @@ public class month_CalendarAdapter extends BaseAdapter {
         return position;
     }
 
+
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,6 +49,7 @@ public class month_CalendarAdapter extends BaseAdapter {
         layoutParams.height = (int) (parent.getHeight() *0.166666666);
        TextView day = convertView.findViewById(R.id.text);
        day.setText(getItem(position));
+
         return convertView;
     }
 

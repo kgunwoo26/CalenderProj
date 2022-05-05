@@ -1,9 +1,6 @@
 package com.example.calenderproj;
 
 import static com.example.calenderproj.MonthViewActivity.DateToString;
-import static com.example.calenderproj.MonthViewActivity.dateArr;
-import static com.example.calenderproj.MonthViewActivity.ndateArr;
-import static com.example.calenderproj.MonthViewActivity.pdateArr;
 import static com.example.calenderproj.MonthViewActivity.selectedDate;
 import static com.example.calenderproj.MonthViewActivity.toolbar_text;
 

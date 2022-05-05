@@ -32,14 +32,13 @@ import java.util.Deque;
 public class MonthViewActivity extends AppCompatActivity {
 
     public static Calendar selectedDate;
-    private Intent mainIntent ;
-    public static ArrayList<String> pdateArr,dateArr,ndateArr;
     Toolbar myToolbar;
     public static TextView toolbar_text;
-    public static ArrayList<String> pWeekArr,WeekArr,nWeekArr;
     public static ArrayList<String> TimeArr;
     public static ArrayList<String> SideArr;
     public static ArrayList<ArrayList> calArr;
+    public static ArrayList<ArrayList> w_calArr;
+
     private ViewPager2 vpPager;
     private GridView week_dayGridView3;
     private GridView week_dayGridView4;
@@ -83,7 +82,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private void initWidgets(){
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
-        init_gArr();
+        init_calArr();
         setMonthView();
         //resetMonthView();
     }
@@ -97,30 +96,13 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         toolbar_text.setText(DateToString(selectedDate));
-        pWeekArr = setWeekArr(selectedDate,-7);
-        WeekArr = setWeekArr(selectedDate,0);
-        nWeekArr = setWeekArr(selectedDate,7);
+        init_w_calArr();
         setTimeView();
         setSideView();
-
-        ViewPager2 vpPager = findViewById(R.id.vpPager);
-        FragmentStateAdapter adapter = new WeekViewPagerAdapter(this);
-        vpPager.setAdapter(adapter);
-        vpPager.setCurrentItem(1);
-        vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                Toast.makeText(MonthViewActivity.this,
-                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-                //setToolbar_text(position-1);
-            }
-        });
-
-        //getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
     }
 
-    private void init_gArr(){
+    private void init_calArr(){
         calArr = new ArrayList<>();
         for(int i=500; i>0; i--){
            calArr.add(setMonthArr(selectedDate,-i));
@@ -129,17 +111,20 @@ public class MonthViewActivity extends AppCompatActivity {
             calArr.add(setMonthArr(selectedDate,i));
         }
     }
+    private void init_w_calArr(){
+        w_calArr = new ArrayList<>();
+        for(int i=500; i>0; i--){
+            w_calArr.add(setWeekArr(selectedDate,-7*i));
+        }
+        for(int i=0; i<500; i++){
+            w_calArr.add(setWeekArr(selectedDate,7*i));
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         toolbar_text.setText(DateToString(selectedDate));
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
-        //getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
-//        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
-//        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
-//        mGridView.setAdapter(adapter);
-//        printToast(mGridView,adapter);
-
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -178,7 +163,7 @@ public class MonthViewActivity extends AppCompatActivity {
         ArrayList<String> TimeArr = new ArrayList();
         for(int i=0; i<24; i++){
             for(int j=0; j<7; j++)
-                TimeArr.add("");
+                TimeArr.add(String.valueOf(j));
                // TimeArr.add(String.valueOf(i)+","+String.valueOf(j));
         }
         return TimeArr;

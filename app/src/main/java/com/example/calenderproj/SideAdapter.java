@@ -42,8 +42,8 @@ public class SideAdapter extends BaseAdapter {
             convertView = inflater.inflate(mResource, parent, false);
         }
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
-        layoutParams.height = (int) (parent.getHeight()*0.125);
-        TextView day = convertView.findViewById(R.id.text_2);
+        layoutParams.height = (int) (parent.getHeight()*0.1);
+        TextView day = convertView.findViewById(R.id.text);
         day.setText(getItem(position));
         return convertView;
     }

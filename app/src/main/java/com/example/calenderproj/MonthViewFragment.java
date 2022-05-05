@@ -1,21 +1,29 @@
 package com.example.calenderproj;
 
 import static com.example.calenderproj.MonthViewActivity.calArr;
+import static com.example.calenderproj.MonthViewActivity.selectedDate;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class MonthViewFragment extends Fragment {
     private static int num;
+    private static View previous = null;
     public MonthViewFragment(int position) {
         num = position;
     }
@@ -34,6 +42,34 @@ public class MonthViewFragment extends Fragment {
         month_CalendarAdapter adapter = new month_CalendarAdapter( getActivity().getApplicationContext(),R.layout.month_item, DateArr);
         GridView gridView = rootView.findViewById(R.id.month_view);
         gridView.setAdapter(adapter);
+
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @SuppressLint("ResourceAsColor")
+            public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
+                String selected_date = adapter.getItem(position);
+                if(selected_date != "") {
+                    Toast.makeText(getActivity(),selectedDate.get(Calendar.YEAR)+"년 "+(selectedDate.get(Calendar.MONTH)+1)+"월 "+
+                            selected_date+"일", Toast.LENGTH_SHORT).show();
+                    adapter.notifyDataSetChanged();
+
+                    if(previous == null) {
+
+                        gridView.getChildAt(position).setBackgroundColor(Color.CYAN);
+                        previous = gridView.getChildAt(position);
+                    }
+                    else {
+                        previous.setBackgroundColor(Color.WHITE);
+                        gridView.getChildAt(position).setBackgroundColor(Color.CYAN);
+                        previous = gridView.getChildAt(position);
+                    }
+
+
+
+                }
+            }
+        });
         return rootView;
     }
 }
