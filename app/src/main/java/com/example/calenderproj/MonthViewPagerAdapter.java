@@ -1,8 +1,7 @@
 package com.example.calenderproj;
 
-import static com.example.calenderproj.MonthViewActivity.setToolbar_text;
-
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -12,7 +11,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.Calendar;
 
 public class MonthViewPagerAdapter extends FragmentStateAdapter {
-    private static int NUM_ITEMS=3;
+    private static int NUM_ITEMS=1000;
     public MonthViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -21,19 +20,9 @@ public class MonthViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                MonthFragment preMonthFrag = new MonthFragment(0);
-                return preMonthFrag;
-            case 1:
-                MonthFragment MonthFrag = new MonthFragment(1);
-                return MonthFrag;
-            case 2:
-                MonthFragment nextMonthFrag = new MonthFragment(2);
-                return nextMonthFrag;
-            default:
-                return null;
-        }
+        Log.e("position", String.valueOf(position));
+        MonthViewFragment monthView = new MonthViewFragment(position);
+        return monthView;
     }
 
     @Override

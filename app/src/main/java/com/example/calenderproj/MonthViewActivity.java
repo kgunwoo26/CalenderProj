@@ -35,14 +35,16 @@ public class MonthViewActivity extends AppCompatActivity {
     private Intent mainIntent ;
     public static ArrayList<String> pdateArr,dateArr,ndateArr;
     Toolbar myToolbar;
-    private static TextView toolbar_text;
+    public static TextView toolbar_text;
     public static ArrayList<String> pWeekArr,WeekArr,nWeekArr;
     public static ArrayList<String> TimeArr;
     public static ArrayList<String> SideArr;
-    public static Deque<ArrayList> deque;
+    public static ArrayList<ArrayList> calArr;
     private ViewPager2 vpPager;
     private GridView week_dayGridView3;
     private GridView week_dayGridView4;
+    private ArrayList<GridView> gArr;
+    final int MAX_LENGTH = 1000;
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
@@ -52,23 +54,6 @@ public class MonthViewActivity extends AppCompatActivity {
         myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
         initWidgets();
-
-    }
-
-    public void SynchronizeScroll(){
-        week_dayGridView3 = findViewById(R.id.week_dayGridView3);
-        week_dayGridView4 = findViewById(R.id.week_dayGridView4);
-        week_dayGridView4.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-            }
-        });
     }
 
     @Override
@@ -98,19 +83,13 @@ public class MonthViewActivity extends AppCompatActivity {
     private void initWidgets(){
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
+        init_gArr();
         setMonthView();
         //resetMonthView();
     }
 
 // SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
 // 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void setToolbar_text(int position){
-        selectedDate.add(Calendar.MONTH,position);
-        Log.e("month",String.valueOf(selectedDate.get(Calendar.MONTH)));
-        toolbar_text.setText(DateToString(selectedDate));
-    }
-
     private void setSideView() {
         SideArr = setSideArr();
     }
@@ -133,7 +112,7 @@ public class MonthViewActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 Toast.makeText(MonthViewActivity.this,
                         "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-                setToolbar_text(position-1);
+                //setToolbar_text(position-1);
             }
         });
 
@@ -141,26 +120,20 @@ public class MonthViewActivity extends AppCompatActivity {
 
     }
 
+    private void init_gArr(){
+        calArr = new ArrayList<>();
+        for(int i=500; i>0; i--){
+           calArr.add(setMonthArr(selectedDate,-i));
+        }
+        for(int i=0; i<500; i++){
+            calArr.add(setMonthArr(selectedDate,i));
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         toolbar_text.setText(DateToString(selectedDate));
-        pdateArr = setMonthArr(selectedDate,-1);
-        dateArr = setMonthArr(selectedDate,0);
-        ndateArr = setMonthArr(selectedDate,1);
-        ViewPager2 vpPager = findViewById(R.id.vpPager);
-        FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-        vpPager.setAdapter(adapter);
-        vpPager.setCurrentItem(1);
-        vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-              Toast.makeText(MonthViewActivity.this,
-                       "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-               setToolbar_text(position-1);
-            }
-
-        });
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
         //getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
 //        CalendarAdapter adapter = new CalendarAdapter(this,R.layout.item, dateArr);
 //        GridView mGridView = (GridView) findViewById(R.id.dayGridView);
@@ -170,42 +143,13 @@ public class MonthViewActivity extends AppCompatActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
 
-    private void resetMonthView(int position){
-        if(position == 0){
-            selectedDate.set(Calendar.MONTH,-1);
-            pdateArr = setMonthArr(selectedDate,-1);
-            dateArr = setMonthArr(selectedDate,0);
-            ndateArr = setMonthArr(selectedDate,1);
-            ViewPager2 vpPager = findViewById(R.id.vpPager);
-     //       FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-      //      vpPager.setAdapter(adapter);
-
-        }
-        else if(position ==1){
-            pdateArr = setMonthArr(selectedDate,-1);
-            dateArr = setMonthArr(selectedDate,0);
-            ndateArr = setMonthArr(selectedDate,1);
-            ViewPager2 vpPager = findViewById(R.id.vpPager);
-     //       FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-  //          vpPager.setAdapter(adapter);
-        }
-        else{
-            selectedDate.set(Calendar.MONTH,+1);
-            pdateArr = setMonthArr(selectedDate,-1);
-            dateArr = setMonthArr(selectedDate,0);
-            ndateArr = setMonthArr(selectedDate,1);
-            ViewPager2 vpPager = findViewById(R.id.vpPager);
-      //      FragmentStateAdapter adapter = new MonthViewPagerAdapter(this);
-      //      vpPager.setAdapter(adapter);
-        }
-    }
 
     private void setTimeView(){
         TimeArr = setTimeArr();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private static String DateToString(Calendar date){
+    static String DateToString(Calendar date){
         SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월");
         return dataFormat.format(date.getTime());
     }

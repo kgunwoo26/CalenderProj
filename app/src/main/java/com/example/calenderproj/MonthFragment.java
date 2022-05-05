@@ -1,25 +1,35 @@
 package com.example.calenderproj;
 
+import static com.example.calenderproj.MonthViewActivity.DateToString;
 import static com.example.calenderproj.MonthViewActivity.dateArr;
 import static com.example.calenderproj.MonthViewActivity.ndateArr;
 import static com.example.calenderproj.MonthViewActivity.pdateArr;
+import static com.example.calenderproj.MonthViewActivity.selectedDate;
+import static com.example.calenderproj.MonthViewActivity.toolbar_text;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MonthFragment extends Fragment {
-    private static int num;
-    public MonthFragment(int position) {
-        num = position;
+    private ViewGroup viewGroup;
+    private int count=500;
+    public MonthFragment() {
         // Required empty public constructor
     }
 
@@ -28,23 +38,41 @@ public class MonthFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
+//
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void setToolbar_text(){
+        toolbar_text.setText(DateToString(selectedDate));
+    }
+
+    private void setInit(){
+        ViewPager2 viewPageSetup = viewGroup.findViewById(R.id.vpPager);
+        MonthViewPagerAdapter adapter = new MonthViewPagerAdapter(getActivity());
+        viewPageSetup.setAdapter(adapter);
+        viewPageSetup.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        viewPageSetup.setCurrentItem(500,false);
+        viewPageSetup.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if(count >position) selectedDate.add(Calendar.MONTH,-1);
+                else if ( count < position ) selectedDate.add(Calendar.MONTH,1);
+                else ;
+                count=position;
+                setToolbar_text();
+            }
+        });
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_month, container, false);
-        ArrayList<String> DateArr ;
-        if(num ==0)
-            DateArr = (ArrayList<String>) pdateArr.clone();
-        else if (num ==1)
-            DateArr = (ArrayList<String>) dateArr.clone();
-        else
-            DateArr = (ArrayList<String>) ndateArr.clone();
-        month_CalendarAdapter adapter = new month_CalendarAdapter( getActivity().getApplicationContext(),R.layout.month_item, DateArr);
-        GridView gridView = rootView.findViewById(R.id.week_dayGridView);
-
-        gridView.setAdapter(adapter);
-        return rootView;
+        //View rootView = inflater.inflate(R.layout.fragment_month, container, false);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_month,container,false);
+        setInit();
+        return viewGroup;
     }
 
 }
