@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,12 +31,13 @@ import java.util.Calendar;
 import java.util.Deque;
 
 public class MonthViewActivity extends AppCompatActivity {
-
-    public static Calendar selectedDate;
     Toolbar myToolbar;
+    public static Calendar selectedDate;
     public static TextView toolbar_text;
+
     public static ArrayList<String> TimeArr;
     public static ArrayList<String> SideArr;
+
     public static ArrayList<ArrayList> calArr;
     public static ArrayList<ArrayList> w_calArr;
 
@@ -54,6 +56,20 @@ public class MonthViewActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         initWidgets();
     }
+
+    //월 달력 회전 에러, 다시 비율 맞춰서 수정 예정입니다.
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        }
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        }
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -151,7 +167,7 @@ public class MonthViewActivity extends AppCompatActivity {
             }
         });
     }
-    public  ArrayList<String> setSideArr() {
+    public ArrayList<String> setSideArr() {
         ArrayList<String> SideArr = new ArrayList();
         for(int i=0; i<24; i++){
             SideArr.add(String.valueOf(i));
@@ -159,12 +175,11 @@ public class MonthViewActivity extends AppCompatActivity {
         return SideArr;
     }
 
-    public  ArrayList<String> setTimeArr(){
+    public ArrayList<String> setTimeArr(){
         ArrayList<String> TimeArr = new ArrayList();
         for(int i=0; i<24; i++){
             for(int j=0; j<7; j++)
                 TimeArr.add(String.valueOf(j));
-               // TimeArr.add(String.valueOf(i)+","+String.valueOf(j));
         }
         return TimeArr;
     }

@@ -13,7 +13,6 @@ public class SideAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> mCalendarList;
     private int mResource;
-    private TextView ViewText;
 
     public SideAdapter(Context context,int resource, ArrayList<String> CalendarList) {
         mContext = context;

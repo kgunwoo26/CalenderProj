@@ -13,7 +13,6 @@ public class week_CalendarAdapter extends BaseAdapter{
         private Context mContext;
         private ArrayList<String> mCalendarList;
         private int mResource;
-        private TextView ViewText;
 
         public week_CalendarAdapter(Context context,int resource, ArrayList<String> CalendarList) {
             mContext = context;

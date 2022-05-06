@@ -16,29 +16,24 @@ public class month_CalendarAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> mCalendarList;
     private int mResource;
-    private TextView ViewText;
 
     public month_CalendarAdapter(Context context, int resource, ArrayList<String> CalendarList) {
         mContext = context;
         mCalendarList = CalendarList;
         mResource = resource;
     }
-
     @Override
     public int getCount() {
         return mCalendarList.size();
     }
-
     @Override
     public String getItem(int position) {
         return mCalendarList.get(position);
     }
-
     @Override
     public long getItemId(int position) {
         return position;
     }
-
 
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -47,8 +42,8 @@ public class month_CalendarAdapter extends BaseAdapter {
          }
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight() *0.166666666);
-       TextView day = convertView.findViewById(R.id.text);
-       day.setText(getItem(position));
+        TextView day = convertView.findViewById(R.id.text);
+        day.setText(getItem(position));
 
         return convertView;
     }
