@@ -1,5 +1,7 @@
 package com.example.calenderproj;
 
+import static com.example.calenderproj.MonthViewActivity.Params;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +44,7 @@ public class TimeAdapter extends BaseAdapter{
             convertView = inflater.inflate(mResource, parent, false);
         }
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
-        layoutParams.height = (int) (parent.getHeight()*0.1);
+        layoutParams.height = (int) (parent.getHeight()*Params);
 //        TextView day = convertView.findViewById(R.id.text_2);
 //        day.setText(getItem(position));
         return convertView;

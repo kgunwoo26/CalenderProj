@@ -34,18 +34,12 @@ public class MonthViewActivity extends AppCompatActivity {
     Toolbar myToolbar;
     public static Calendar selectedDate;
     public static TextView toolbar_text;
-
     public static ArrayList<String> TimeArr;
     public static ArrayList<String> SideArr;
-
     public static ArrayList<ArrayList> calArr;
     public static ArrayList<ArrayList> w_calArr;
+    public static float Params;
 
-    private ViewPager2 vpPager;
-    private GridView week_dayGridView3;
-    private GridView week_dayGridView4;
-    private ArrayList<GridView> gArr;
-    final int MAX_LENGTH = 1000;
     @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
@@ -63,9 +57,11 @@ public class MonthViewActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Params =(float) 0.1;
         }
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Params =(float) 0.15;
         }
     }
 
@@ -98,6 +94,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private void initWidgets(){
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
+        Params= (float) 0.1;
         init_calArr();
         setMonthView();
         //resetMonthView();

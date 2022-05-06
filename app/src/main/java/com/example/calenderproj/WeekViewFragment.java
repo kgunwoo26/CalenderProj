@@ -12,6 +12,8 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -79,9 +81,10 @@ public class WeekViewFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
                 String selected_date = adapter2.getItem(position);
                 if(selected_date != "") {
+                    Log.e("position", String.valueOf(position));
                     Toast.makeText(getActivity(),"position = "+
                             selected_date, Toast.LENGTH_SHORT).show();
-                    adapter2.notifyDataSetChanged();
+
                     if(T_previous != null)  {T_previous.setBackgroundColor(Color.WHITE);}
 
                     gridView2.getChildAt(position).setBackgroundColor(Color.CYAN);
@@ -90,6 +93,7 @@ public class WeekViewFragment extends Fragment {
                     if(D_previous != null){ D_previous.setBackgroundColor(Color.WHITE);}
                     gridView.getChildAt(position%7).setBackgroundColor(Color.CYAN);
                     D_previous = gridView.getChildAt(position%7);
+                    adapter2.notifyDataSetChanged();
 
                 }
             }
