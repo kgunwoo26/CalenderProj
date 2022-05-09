@@ -30,7 +30,7 @@
 
 
     </LinearLayout>
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -39,17 +39,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-            <GridView
+            <LinearLayout
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="true"
                 android:orientation="vertical"
-                android:isScrollContainer="false"
+
                 android:id="@+id/sidebar"
                 android:horizontalSpacing="2dp"
-                android:numColumns="1"
-                android:stretchMode="columnWidth"
-                />
+                >
+
+            </LinearLayout>
 
             <GridView
                 android:id="@+id/week_dayGridView2"
@@ -60,14 +60,12 @@
                 android:numColumns="7"
                 android:padding="1dp"
                 android:horizontalSpacing="1dp"
-                android:nestedScrollingEnabled="true"
                 android:verticalSpacing="1dp"
-                android:stretchMode="columnWidth"
                 >
             </GridView>
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
     </LinearLayout>
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.example.calenderproj;
 
+import static com.example.calenderproj.MonthViewActivity.Params;
 import static com.example.calenderproj.MonthViewActivity.SideArr;
 import static com.example.calenderproj.MonthViewActivity.TimeArr;
 import static com.example.calenderproj.MonthViewActivity.selectedDate;
@@ -16,7 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -104,9 +108,19 @@ public class WeekViewFragment extends Fragment {
             }
         });
 
-        SideAdapter adapter3 = new SideAdapter(getActivity().getApplicationContext(),R.layout.side_item,SideArr);
-       GridView gridView3 = rootView.findViewById(R.id.sidebar);
-        gridView3.setAdapter(adapter3);
+        LinearLayout sidebar = rootView.findViewById(R.id.sidebar);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.height = (int) (150);
+        for(int i=0; i<24; i++){
+            TextView date = new TextView(rootView.getContext());
+           date.setLayoutParams(params);
+            date.setText(String.valueOf(i));
+            date.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+            date.setPadding(0,0,20,0);
+            sidebar.addView(date);
+        }
+
+
         return rootView;
     }
 }
