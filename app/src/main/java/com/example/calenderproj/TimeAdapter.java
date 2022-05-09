@@ -46,7 +46,7 @@ public class TimeAdapter extends BaseAdapter{
             convertView = inflater.inflate(mResource, parent, false);
         }
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
-        layoutParams.height = (int) (parent.getHeight()*0.0415);
+        layoutParams.height = (int) (parent.getHeight()*0.0416);
 //        TextView day = convertView.findViewById(R.id.text_2);
 //        day.setText(getItem(position));
 if(mGridColor.get(position)) convertView.setBackgroundColor(Color.CYAN);

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,16 +110,17 @@ public class WeekViewFragment extends Fragment {
         });
 
         LinearLayout sidebar = rootView.findViewById(R.id.sidebar);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.height = (int) (150);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
         for(int i=0; i<24; i++){
             TextView date = new TextView(rootView.getContext());
            date.setLayoutParams(params);
             date.setText(String.valueOf(i));
-            date.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-            date.setPadding(0,0,20,0);
+           // date.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+         //   date.setPadding(0,0,20,0);
             sidebar.addView(date);
         }
+
 
 
         return rootView;
