@@ -14,12 +14,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-
 import androidx.annotation.Nullable;
 import androidx.viewpager2.widget.ViewPager2;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class WeekFragment extends Fragment {

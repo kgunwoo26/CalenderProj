@@ -17,10 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -28,7 +26,6 @@ public class WeekViewFragment extends Fragment {
     private static int num;
     private static View D_previous = null;
     private static View T_previous = null;
-    private static int Dp;
     private static int Tp;
 
     private ArrayList<Boolean> colors;
@@ -49,8 +46,8 @@ public class WeekViewFragment extends Fragment {
         for(int i = 0 ; i<170; i++) colors.add(false);
         View rootView = inflater.inflate(R.layout.fragment_week_view, container, false) ;
         DateArr = w_calArr.get(num);
-        week_CalendarAdapter adapter = new week_CalendarAdapter( getActivity().getApplicationContext(),R.layout.week_item, DateArr);
-        GridView gridView= rootView.findViewById(R.id.week_dayGridView2);
+        WeekCalendarAdapter adapter = new WeekCalendarAdapter( getActivity().getApplicationContext(),R.layout.week_item, DateArr);
+        GridView gridView= rootView.findViewById(R.id.week_dayGridView);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -75,7 +72,7 @@ public class WeekViewFragment extends Fragment {
         });
 
         TimeAdapter adapter2 = new TimeAdapter(getActivity().getApplicationContext(),R.layout.month_item,TimeArr,colors);
-        GridView gridView2= rootView.findViewById(R.id.week_dayGridView3);
+        GridView gridView2= rootView.findViewById(R.id.week_dayGridView2);
         gridView2.setAdapter(adapter2);
         Tp=-1;
         gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {

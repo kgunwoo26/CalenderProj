@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
-public class month_CalendarAdapter extends BaseAdapter {
+public class MonthCalendarAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> mCalendarList;
     private int mResource;
 
-    public month_CalendarAdapter(Context context, int resource, ArrayList<String> CalendarList) {
+    public MonthCalendarAdapter(Context context, int resource, ArrayList<String> CalendarList) {
         mContext = context;
         mCalendarList = CalendarList;
         mResource = resource;

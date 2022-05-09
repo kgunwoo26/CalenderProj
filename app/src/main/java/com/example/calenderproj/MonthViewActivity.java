@@ -12,23 +12,15 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Deque;
+
 
 public class MonthViewActivity extends AppCompatActivity {
     Toolbar myToolbar;
@@ -152,18 +144,7 @@ public class MonthViewActivity extends AppCompatActivity {
         return dataFormat.format(date.getTime());
     }
 
-    private void printToast(GridView mGridView, month_CalendarAdapter adapter) {
-        int selected_month = selectedDate.get(Calendar.MONTH) + 1;
-        int selected_year = selectedDate.get(Calendar.YEAR);
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
-                String selected_date = adapter.getItem(position);
-                if(selected_date != "")
-                Toast.makeText(MonthViewActivity.this,
-                        selected_year+"."+selected_month+"."+selected_date , Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+
     public ArrayList<String> setSideArr() {
         ArrayList<String> SideArr = new ArrayList();
         for(int i=0; i<24; i++){

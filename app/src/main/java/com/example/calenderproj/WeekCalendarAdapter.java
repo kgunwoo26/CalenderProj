@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class week_CalendarAdapter extends BaseAdapter{
+public class WeekCalendarAdapter extends BaseAdapter{
         private Context mContext;
         private ArrayList<String> mCalendarList;
         private int mResource;
 
-        public week_CalendarAdapter(Context context,int resource, ArrayList<String> CalendarList) {
+        public WeekCalendarAdapter(Context context, int resource, ArrayList<String> CalendarList) {
             mContext = context;
             mCalendarList = CalendarList;
             mResource = resource;
