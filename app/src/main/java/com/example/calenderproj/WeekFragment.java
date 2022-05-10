@@ -1,8 +1,6 @@
 package com.example.calenderproj;
 
 import static com.example.calenderproj.MonthViewActivity.DateToString;
-import static com.example.calenderproj.MonthViewActivity.SideArr;
-import static com.example.calenderproj.MonthViewActivity.TimeArr;
 import static com.example.calenderproj.MonthViewActivity.selectedDate;
 import static com.example.calenderproj.MonthViewActivity.toolbar_text;
 
@@ -57,7 +55,6 @@ public class WeekFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //View rootView = inflater.inflate(R.layout.fragment_month, container, false);
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_week,container,false);
         setInit();
         return viewGroup;

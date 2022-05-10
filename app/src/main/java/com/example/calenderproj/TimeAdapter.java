@@ -1,15 +1,11 @@
 package com.example.calenderproj;
 
-import static com.example.calenderproj.MonthViewActivity.Params;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 
 public class TimeAdapter extends BaseAdapter{
@@ -47,8 +43,7 @@ public class TimeAdapter extends BaseAdapter{
         }
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight()*0.0416);
-//        TextView day = convertView.findViewById(R.id.text_2);
-//        day.setText(getItem(position));
+
 if(mGridColor.get(position)) convertView.setBackgroundColor(Color.CYAN);
 else convertView.setBackgroundColor(Color.WHITE);
         return convertView;

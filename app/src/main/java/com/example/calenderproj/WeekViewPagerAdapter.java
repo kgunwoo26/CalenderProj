@@ -22,7 +22,6 @@ public class WeekViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Log.e("position", String.valueOf(position));
         WeekViewFragment weekView = new WeekViewFragment(position);
         return weekView;
     }

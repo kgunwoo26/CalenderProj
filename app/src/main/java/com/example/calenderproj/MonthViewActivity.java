@@ -27,7 +27,6 @@ public class MonthViewActivity extends AppCompatActivity {
     public static Calendar selectedDate;
     public static TextView toolbar_text;
     public static ArrayList<String> TimeArr;
-    public static ArrayList<String> SideArr;
     public static ArrayList<ArrayList> calArr;
     public static ArrayList<ArrayList> w_calArr;
     public static float Params;
@@ -42,23 +41,6 @@ public class MonthViewActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         initWidgets();
     }
-
-    //월 달력 회전 에러, 다시 비율 맞춰서 수정 예정입니다.
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Params =(float) 0.1;
-        }
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Params =(float) 0.15;
-        }
-    }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -75,12 +57,28 @@ public class MonthViewActivity extends AppCompatActivity {
                 setWeekView();
                 return true;
             case R.id.monthcal_fragment:
-               setMonthView();
+                setMonthView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Params =(float) 0.1;
+        }
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Params =(float) 0.15;
+        }
+    }
+
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
@@ -89,33 +87,41 @@ public class MonthViewActivity extends AppCompatActivity {
         Params= (float) 0.1;
         init_calArr();
         setMonthView();
-        //resetMonthView();
     }
 
-// SimpleDataFormat 날짜에 대한 형식 문자열을 설정해주는 클래스
-// 	getTime()메소드는 현재의 객체(Calendar)를 Date 객체로 변환한다.
-    private void setSideView() {
-        SideArr = setSideArr();
+
+    private void init_calArr(){
+        calArr = new ArrayList<>();
+        for(int i=500; i>0; i--){
+            calArr.add(setMonthArr(selectedDate,-i));
+        }
+        for(int i=0; i<500; i++){
+            calArr.add(setMonthArr(selectedDate,i));
+        }
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setMonthView() {
+        toolbar_text.setText(DateToString(selectedDate));
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
         toolbar_text.setText(DateToString(selectedDate));
         init_w_calArr();
         setTimeView();
-        setSideView();
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
     }
 
-    private void init_calArr(){
-        calArr = new ArrayList<>();
-        for(int i=500; i>0; i--){
-           calArr.add(setMonthArr(selectedDate,-i));
-        }
-        for(int i=0; i<500; i++){
-            calArr.add(setMonthArr(selectedDate,i));
-        }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    static String DateToString(Calendar date){
+        SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월");
+        return dataFormat.format(date.getTime());
     }
+
     private void init_w_calArr(){
         w_calArr = new ArrayList<>();
         for(int i=500; i>0; i--){
@@ -126,32 +132,16 @@ public class MonthViewActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void setMonthView() {
-        toolbar_text.setText(DateToString(selectedDate));
-        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
 
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setTimeView(){
         TimeArr = setTimeArr();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    static String DateToString(Calendar date){
-        SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월");
-        return dataFormat.format(date.getTime());
-    }
 
 
-    public ArrayList<String> setSideArr() {
-        ArrayList<String> SideArr = new ArrayList();
-        for(int i=0; i<24; i++){
-            SideArr.add(String.valueOf(i));
-        }
-        return SideArr;
-    }
 
     public ArrayList<String> setTimeArr(){
         ArrayList<String> TimeArr = new ArrayList();
@@ -192,7 +182,6 @@ public class MonthViewActivity extends AppCompatActivity {
         return WeekArray;
     }
 
-    // 일요일 : 0 ~ 토요일 : 6
     public ArrayList<String> setMonthArr(Calendar selectedDate,int month){
         ArrayList <String> dateArray = new ArrayList();
         Calendar cal = (Calendar) selectedDate.clone();

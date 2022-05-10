@@ -1,29 +1,22 @@
 package com.example.calenderproj;
 
-import static com.example.calenderproj.MonthViewActivity.Params;
-import static com.example.calenderproj.MonthViewActivity.SideArr;
 import static com.example.calenderproj.MonthViewActivity.TimeArr;
 import static com.example.calenderproj.MonthViewActivity.selectedDate;
 import static com.example.calenderproj.MonthViewActivity.w_calArr;
-
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -89,11 +82,10 @@ public class WeekViewFragment extends Fragment {
                             selected_date, Toast.LENGTH_SHORT).show();
 
                     if(Tp != -1)  {
-                    //    T_previous.setBackgroundColor(Color.WHITE);
+
                         colors.set(Tp,false);
                     }
 
-                  //  gridView2.getChildAt(position-gridView2.getFirstVisiblePosition()).setBackgroundColor(Color.CYAN);
                     colors.set(position,true);
                     T_previous = gridView2.getChildAt(position-gridView2.getFirstVisiblePosition());
                     Tp = position;
@@ -116,8 +108,8 @@ public class WeekViewFragment extends Fragment {
             TextView date = new TextView(rootView.getContext());
            date.setLayoutParams(params);
             date.setText(String.valueOf(i));
-           // date.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-         //   date.setPadding(0,0,20,0);
+            date.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+            date.setPadding(0,0,20,0);
             sidebar.addView(date);
         }
 

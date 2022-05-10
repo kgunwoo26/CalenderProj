@@ -20,7 +20,6 @@ public class MonthViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Log.e("position", String.valueOf(position));
         MonthViewFragment monthView = new MonthViewFragment(position);
         return monthView;
     }

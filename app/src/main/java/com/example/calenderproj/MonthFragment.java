@@ -35,8 +35,7 @@ public class MonthFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-//
-//    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void setToolbar_text(){
         toolbar_text.setText(DateToString(selectedDate));
@@ -66,7 +65,6 @@ public class MonthFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //View rootView = inflater.inflate(R.layout.fragment_month, container, false);
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_month,container,false);
         setInit();
         return viewGroup;
