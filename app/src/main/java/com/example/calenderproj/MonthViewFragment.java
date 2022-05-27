@@ -4,6 +4,7 @@ import static com.example.calenderproj.MonthViewActivity.calArr;
 import static com.example.calenderproj.MonthViewActivity.selectedDate;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import java.util.Calendar;
 public class MonthViewFragment extends Fragment {
     private static int num;
     private static View previous = null;
+    private static final int FIRST_ACTIVITY_REQUEST_CODE = 0;
     public MonthViewFragment(int position) {
         num = position;
     }
@@ -63,8 +65,8 @@ public class MonthViewFragment extends Fragment {
                         gridView.getChildAt(position).setBackgroundColor(Color.CYAN);
                         previous = gridView.getChildAt(position);
                     }
-
-
+                    Intent intent = new Intent(getActivity(), ScheduleActivity.class);
+                    startActivityForResult(intent, FIRST_ACTIVITY_REQUEST_CODE);
 
                 }
             }

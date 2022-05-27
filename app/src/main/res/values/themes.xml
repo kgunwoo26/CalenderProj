@@ -18,4 +18,11 @@
     <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:tint">#ffffff</item>
     </style>
+    <style name="numberPickerCustomSize">
+        <!--Display textSize-->
+        <item name="android:textSize">17dp</item>
+        <!--Display textColor-->
+        <item name="android:editTextColor">@color/black</item>
+    </style>
+    출처: https://altongmon.tistory.com/823 [IOS를 Java:티스토리]
 </resources>
