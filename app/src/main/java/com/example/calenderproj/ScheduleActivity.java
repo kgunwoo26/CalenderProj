@@ -1,10 +1,13 @@
 package com.example.calenderproj;
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Calendar;
+
 
 public class ScheduleActivity extends AppCompatActivity {
     final private int REQUEST_PERMISSIONS_FOR_LAST_KNOWN_LOCATION = 100;
@@ -33,15 +38,33 @@ public class ScheduleActivity extends AppCompatActivity {
     private NumberPicker endHourPicker;
     private NumberPicker endMinutePicker;
     private NumberPicker endTypePicker;
-
+    private TextView editTextTime;
+    private Calendar date;
+    private int position;
+    private Calendar thisTime;
+    String monthOfdate;
     private boolean mRequestingLocationUpdates;
     private Location mLastLocation;
     private LocationCallback mLocationCallback;
+    private Button exitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+        exitButton = findViewById(R.id.exitActivity);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Intent intent = getIntent();
+        date =  (Calendar)intent.getSerializableExtra("date");
+        monthOfdate = intent.getStringExtra("monthOfdate");
+        position = intent.getIntExtra("Time",-1);
+        thisTime = Calendar.getInstance();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
@@ -52,12 +75,35 @@ public class ScheduleActivity extends AppCompatActivity {
             return;
         }
 
+        initPickers();
+        editTextTime = findViewById(R.id.editTextTime);
+        if(position ==-1)
+            editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+(thisTime.get(Calendar.HOUR_OF_DAY)+1)+"시");
+        else
+            editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+((position/7))+"시");
+
+    }
+
+    void setEditTextTime(int Time){
+        int time = Time;
+        if(startTypePicker.getValue() == 1) time+=12;
+        editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시");
+    }
+    void setEditTextTimeAMPM(){
+        int time = startHourPicker.getValue();
+        if(startTypePicker.getValue() == 1) time+=12;
+        editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시");
+    }
+
+    void initPickers(){
         startHourPicker = findViewById(R.id.startHourPicker);
         startMinutePicker = findViewById(R.id.startMinutePicker);
         startTypePicker = findViewById(R.id.startTypePicker);
         endHourPicker = findViewById(R.id.endHourPicker);
         endMinutePicker = findViewById(R.id.endMinutePicker);
         endTypePicker = findViewById(R.id.endTypePicker);
+        int AMPM;
+
 
 
 
@@ -71,6 +117,36 @@ public class ScheduleActivity extends AppCompatActivity {
         endMinutePicker.setMinValue(0);
         endMinutePicker.setMaxValue(59);
 
+
+        if(position == -1) {
+            startHourPicker.setValue((thisTime.get(Calendar.HOUR) + 1));
+            endHourPicker.setValue((thisTime.get(Calendar.HOUR) + 2));
+            if(thisTime.get(Calendar.AM_PM) == Calendar.AM) AMPM =0;
+            else AMPM =1;
+        }
+        else {
+            int value = (position/7)/13;
+            startHourPicker.setValue((position/7)%13+value);
+            endHourPicker.setValue(((position/7)%13)+1+value);
+            if((position/7)<12) {
+                if((position/7) ==11) {AMPM=2;}
+                else AMPM =0;
+            }
+            else {
+                if((position/7)== 23) AMPM =3;
+                else AMPM =1;
+            }
+        }
+
+        startHourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                setEditTextTime(newVal);
+            }
+        });
+
+
+
         String[] strings = new String[]{"AM","PM"};
         startTypePicker.setMinValue(0);
         startTypePicker.setMaxValue(1);
@@ -78,8 +154,23 @@ public class ScheduleActivity extends AppCompatActivity {
         endTypePicker.setMaxValue(1);
         startTypePicker.setDisplayedValues(strings);
         endTypePicker.setDisplayedValues(strings);
+        if(AMPM >1){
+            startTypePicker.setValue(AMPM%2);
+            endTypePicker.setValue((AMPM%2+1)%2);
+        }
+        else{
+            startTypePicker.setValue(AMPM);
+            endTypePicker.setValue(AMPM);
+        }
+        startTypePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                setEditTextTimeAMPM();
+            }
+        });
 
     }
+
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 

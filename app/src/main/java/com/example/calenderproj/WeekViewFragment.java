@@ -4,6 +4,7 @@ import static com.example.calenderproj.MonthViewActivity.TimeArr;
 import static com.example.calenderproj.MonthViewActivity.selectedDate;
 import static com.example.calenderproj.MonthViewActivity.w_calArr;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -64,6 +65,10 @@ public class WeekViewFragment extends Fragment {
                             T_previous.setBackgroundColor(Color.WHITE);
                             T_previous = null;
                         }
+                    Intent intent = new Intent(getActivity(), ScheduleActivity.class);
+                    intent.putExtra("date",selectedDate);
+                    intent.putExtra("monthOfdate",selected_date);
+                    startActivityForResult(intent, 1);
                     }
 
             }
@@ -76,10 +81,11 @@ public class WeekViewFragment extends Fragment {
         gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressLint("ResourceAsColor")
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
-                String selected_date = adapter2.getItem(position);
+                String selected_date = adapter.getItem(Integer.parseInt(adapter2.getItem(position)));
+                String selected_date2 = adapter2.getItem(position);
                     Log.e("position", String.valueOf(position));
-                    Toast.makeText(getActivity(),"position = "+
-                            selected_date, Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getActivity(),"position = "+
+                  //          selected_date2, Toast.LENGTH_SHORT).show();
 
                     if(Tp != -1)  {
 
@@ -98,6 +104,12 @@ public class WeekViewFragment extends Fragment {
                     gridView.setSelection(position%7);
                     D_previous = gridView.getChildAt(position%7);
                     adapter2.notifyDataSetChanged();
+
+                Intent intent = new Intent(getActivity(), ScheduleActivity.class);
+                intent.putExtra("date",selectedDate);
+                intent.putExtra("monthOfdate",selected_date);
+                intent.putExtra("Time",position);
+                startActivityForResult(intent, 1);
             }
         });
 

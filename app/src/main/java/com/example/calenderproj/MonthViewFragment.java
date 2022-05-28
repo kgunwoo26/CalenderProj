@@ -51,8 +51,8 @@ public class MonthViewFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
                 String selected_date = adapter.getItem(position);
                 if(selected_date != "") {
-                    Toast.makeText(getActivity(),selectedDate.get(Calendar.YEAR)+"년 "+(selectedDate.get(Calendar.MONTH)+1)+"월 "+
-                            selected_date+"일", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(),selectedDate.get(Calendar.YEAR)+"년 "+(selectedDate.get(Calendar.MONTH)+1)+"월 "+
+                     //       selected_date+"일", Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
 
                     if(previous == null) {
@@ -66,7 +66,9 @@ public class MonthViewFragment extends Fragment {
                         previous = gridView.getChildAt(position);
                     }
                     Intent intent = new Intent(getActivity(), ScheduleActivity.class);
-                    startActivityForResult(intent, FIRST_ACTIVITY_REQUEST_CODE);
+                    intent.putExtra("date",selectedDate);
+                    intent.putExtra("monthOfdate",selected_date);
+                    startActivityForResult(intent, 1);
 
                 }
             }
