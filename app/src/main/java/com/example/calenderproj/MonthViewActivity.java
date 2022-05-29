@@ -49,7 +49,6 @@ public class MonthViewActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -79,8 +78,6 @@ public class MonthViewActivity extends AppCompatActivity {
     }
 
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
         toolbar_text = findViewById(R.id.toolbar_text);
@@ -89,7 +86,6 @@ public class MonthViewActivity extends AppCompatActivity {
         init_calArr();
         setMonthView();
     }
-
 
 
     private void init_calArr(){
@@ -102,13 +98,11 @@ public class MonthViewActivity extends AppCompatActivity {
         }
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         toolbar_text.setText(DateToString(selectedDate));
         getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setWeekView() {
@@ -135,15 +129,10 @@ public class MonthViewActivity extends AppCompatActivity {
     }
 
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setTimeView(){
         TimeArr = setTimeArr();
     }
-
-
-
 
     public ArrayList<String> setTimeArr(){
         ArrayList<String> TimeArr = new ArrayList();

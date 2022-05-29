@@ -44,7 +44,6 @@ public class MonthViewFragment extends Fragment {
         GridView gridView = rootView.findViewById(R.id.month_view);
         gridView.setAdapter(adapter);
 
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @SuppressLint("ResourceAsColor")
@@ -54,7 +53,6 @@ public class MonthViewFragment extends Fragment {
                     //Toast.makeText(getActivity(),selectedDate.get(Calendar.YEAR)+"년 "+(selectedDate.get(Calendar.MONTH)+1)+"월 "+
                      //       selected_date+"일", Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
-
                     if(previous == null) {
 
                         gridView.getChildAt(position).setBackgroundColor(Color.CYAN);
@@ -69,7 +67,6 @@ public class MonthViewFragment extends Fragment {
                     intent.putExtra("date",selectedDate);
                     intent.putExtra("monthOfdate",selected_date);
                     startActivityForResult(intent, 1);
-
                 }
             }
         });

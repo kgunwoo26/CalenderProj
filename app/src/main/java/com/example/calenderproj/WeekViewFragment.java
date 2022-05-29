@@ -124,9 +124,6 @@ public class WeekViewFragment extends Fragment {
             date.setPadding(0,0,20,0);
             sidebar.addView(date);
         }
-
-
-
         return rootView;
     }
 }

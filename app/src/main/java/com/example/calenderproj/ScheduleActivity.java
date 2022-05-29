@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.location.Location;
+//mport android.location.LocationRequest;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,34 +32,25 @@ import java.util.Calendar;
 public class ScheduleActivity extends AppCompatActivity {
     final private int REQUEST_PERMISSIONS_FOR_LAST_KNOWN_LOCATION = 100;
     final private int REQUEST_PERMISSIONS_FOR_LOCATION_UPDATES = 101;
+    final static String TAG="TEST";
     private FusedLocationProviderClient mFusedLocationClient;
-    private NumberPicker startHourPicker;
-    private NumberPicker startMinutePicker;
-    private NumberPicker startTypePicker;
-    private NumberPicker endHourPicker;
-    private NumberPicker endMinutePicker;
-    private NumberPicker endTypePicker;
+    private NumberPicker startHourPicker, startMinutePicker, startTypePicker;
+    private NumberPicker endHourPicker, endMinutePicker, endTypePicker;
     private TextView editTextTime;
-    private Calendar date;
+    private Calendar date, thisTime;
     private int position;
-    private Calendar thisTime;
     String monthOfdate;
     private boolean mRequestingLocationUpdates;
     private Location mLastLocation;
     private LocationCallback mLocationCallback;
-    private Button exitButton;
+    private Button exitButton, saveButton, deleteButton;
+    private DBHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-        exitButton = findViewById(R.id.exitActivity);
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mDbHelper = new DBHelper(this);
 
         Intent intent = getIntent();
         date =  (Calendar)intent.getSerializableExtra("date");
@@ -82,6 +74,29 @@ public class ScheduleActivity extends AppCompatActivity {
         else
             editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+((position/7))+"시");
 
+        saveButton = findViewById(R.id.saveBtn);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                insertRecord();
+                Toast.makeText(getApplication(),"test", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        exitButton = findViewById(R.id.exitActivity);
+        exitButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                finish();
+            }
+        });
+
+        deleteButton = findViewById(R.id.deleteBtn);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+            }
+        });
+
     }
 
     void setEditTextTime(int Time){
@@ -104,9 +119,6 @@ public class ScheduleActivity extends AppCompatActivity {
         endTypePicker = findViewById(R.id.endTypePicker);
         int AMPM;
 
-
-
-
         startHourPicker.setMinValue(1);
         startHourPicker.setMaxValue(12);
         startMinutePicker.setMinValue(0);
@@ -117,12 +129,15 @@ public class ScheduleActivity extends AppCompatActivity {
         endMinutePicker.setMinValue(0);
         endMinutePicker.setMaxValue(59);
 
-
+        // 월 별 해당 오전 : AMPM = 0 , 오후 : AMPM = 1
+        // 주 별 해당 오전 : AMPM = 2 , 오후 : AMPM = 3
+        // 주간 AMPM값들은 0,1로 각각 교체됨
         if(position == -1) {
             startHourPicker.setValue((thisTime.get(Calendar.HOUR) + 1));
             endHourPicker.setValue((thisTime.get(Calendar.HOUR) + 2));
             if(thisTime.get(Calendar.AM_PM) == Calendar.AM) AMPM =0;
             else AMPM =1;
+
         }
         else {
             int value = (position/7)/13;
@@ -144,8 +159,6 @@ public class ScheduleActivity extends AppCompatActivity {
                 setEditTextTime(newVal);
             }
         });
-
-
 
         String[] strings = new String[]{"AM","PM"};
         startTypePicker.setMinValue(0);
@@ -170,6 +183,31 @@ public class ScheduleActivity extends AppCompatActivity {
         });
 
     }
+
+    private void insertRecord() {
+        EditText title = (EditText)findViewById(R.id.editTextTime);
+        /* date, start_time, end_time 어떻게 얻어와서 저장할건지 다시 고려 해야함.
+        현재는 DB에 잘 저장되는지 테스트를 위해 임시적으로 title 변수와 공유하는 역할을 하고 있음 */
+        EditText date = (EditText)findViewById(R.id.editTextTime);
+        EditText start_time = (EditText)findViewById(R.id.editTextTime);
+        EditText end_time = (EditText)findViewById(R.id.editTextTime);
+        EditText place = (EditText)findViewById(R.id.place);
+        EditText memo = (EditText)findViewById(R.id.memo);
+
+        mDbHelper.insertEventBySQL(title.getText().toString(),
+                date.getText().toString(),
+                start_time.getText().toString(),
+                end_time.getText().toString(),
+                place.getText().toString(),
+                memo.getText().toString());
+//        long nOfRows = mDbHelper.insertUserByMethod(name.getText().toString(),phone.getText().toString());
+//        if (nOfRows >0)
+//            Toast.makeText(this,nOfRows+" Record Inserted", Toast.LENGTH_SHORT).show();
+//        else
+//            Toast.makeText(this,"No Record Inserted", Toast.LENGTH_SHORT).show();
+    }
+
+
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
