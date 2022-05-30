@@ -25,6 +25,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 
@@ -43,7 +44,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private boolean mRequestingLocationUpdates;
     private Location mLastLocation;
     private LocationCallback mLocationCallback;
-    private Button exitButton, saveButton, deleteButton;
+    private Button exitButton, saveButton, deleteButton ;
     private DBHelper mDbHelper;
 
     @Override
@@ -51,6 +52,7 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
         mDbHelper = new DBHelper(this);
+
 
         Intent intent = getIntent();
         date =  (Calendar)intent.getSerializableExtra("date");
@@ -95,6 +97,8 @@ public class ScheduleActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
 
     }
 

@@ -41,6 +41,7 @@ public class MonthViewActivity extends AppCompatActivity {
         myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
         initWidgets();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

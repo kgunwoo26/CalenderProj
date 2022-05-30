@@ -18,6 +18,9 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -26,6 +29,8 @@ public class WeekViewFragment extends Fragment {
     private static View D_previous = null;
     private static View T_previous = null;
     private static int Tp;
+    private String selected_date;
+    private int selected_position;
 
     private ArrayList<Boolean> colors;
     public WeekViewFragment(int position) {
@@ -81,7 +86,7 @@ public class WeekViewFragment extends Fragment {
         gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressLint("ResourceAsColor")
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
-                String selected_date = adapter.getItem(Integer.parseInt(adapter2.getItem(position)));
+                selected_date = adapter.getItem(Integer.parseInt(adapter2.getItem(position)));
                 String selected_date2 = adapter2.getItem(position);
                     Log.e("position", String.valueOf(position));
                   //  Toast.makeText(getActivity(),"position = "+
@@ -104,12 +109,8 @@ public class WeekViewFragment extends Fragment {
                     gridView.setSelection(position%7);
                     D_previous = gridView.getChildAt(position%7);
                     adapter2.notifyDataSetChanged();
+                      selected_position= position;
 
-                Intent intent = new Intent(getActivity(), ScheduleActivity.class);
-                intent.putExtra("date",selectedDate);
-                intent.putExtra("monthOfdate",selected_date);
-                intent.putExtra("Time",position);
-                startActivityForResult(intent, 1);
             }
         });
 
@@ -124,6 +125,22 @@ public class WeekViewFragment extends Fragment {
             date.setPadding(0,0,20,0);
             sidebar.addView(date);
         }
+
+        FloatingActionButton addBtn =getActivity().findViewById(R.id.addBtn);
+        addBtn.setBackgroundColor(1);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(selected_date != null) {
+                    Intent intent = new Intent(getActivity(), ScheduleActivity.class);
+                    intent.putExtra("date",selectedDate);
+                    intent.putExtra("monthOfdate",selected_date);
+                    intent.putExtra("Time",selected_position);
+                    startActivityForResult(intent, 1);
+                    Log.e("clicked", "clicked");
+                }
+            }
+        });
         return rootView;
     }
 }

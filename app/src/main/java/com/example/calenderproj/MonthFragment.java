@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ import java.util.Calendar;
 public class MonthFragment extends Fragment {
     private ViewGroup viewGroup;
     private int count=500;
+    private Button addButton;
+
     public MonthFragment() {
         // Required empty public constructor
     }
@@ -67,6 +70,7 @@ public class MonthFragment extends Fragment {
                              Bundle savedInstanceState) {
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_month,container,false);
         setInit();
+
         return viewGroup;
     }
 
