@@ -77,8 +77,7 @@ public class ScheduleActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.saveBtn);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                insertRecord();
-                Toast.makeText(getApplication(),"test", Toast.LENGTH_SHORT).show();
+               insertRecord();
             }
         });
 
@@ -90,10 +89,10 @@ public class ScheduleActivity extends AppCompatActivity {
         });
 
         deleteButton = findViewById(R.id.deleteBtn);
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-
+                //deleteRecord();
+                finish();
             }
         });
 
