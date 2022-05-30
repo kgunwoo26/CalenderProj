@@ -30,7 +30,7 @@ public class WeekViewFragment extends Fragment {
     private static View T_previous = null;
     private static int Tp;
     private String selected_date;
-    private int selected_position;
+    private int selected_position=-1;
 
     private ArrayList<Boolean> colors;
     public WeekViewFragment(int position) {
@@ -57,7 +57,7 @@ public class WeekViewFragment extends Fragment {
 
             @SuppressLint("ResourceAsColor")
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
-                String selected_date = adapter.getItem(position);
+                selected_date = adapter.getItem(position);
                 if(selected_date != "") {
                     Toast.makeText(getActivity(),selectedDate.get(Calendar.YEAR)+"년 "+(selectedDate.get(Calendar.MONTH)+1)+"월 "+
                             selected_date+"일", Toast.LENGTH_SHORT).show();
@@ -70,10 +70,6 @@ public class WeekViewFragment extends Fragment {
                             T_previous.setBackgroundColor(Color.WHITE);
                             T_previous = null;
                         }
-                    Intent intent = new Intent(getActivity(), ScheduleActivity.class);
-                    intent.putExtra("date",selectedDate);
-                    intent.putExtra("monthOfdate",selected_date);
-                    startActivityForResult(intent, 1);
                     }
 
             }
@@ -135,7 +131,7 @@ public class WeekViewFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), ScheduleActivity.class);
                     intent.putExtra("date",selectedDate);
                     intent.putExtra("monthOfdate",selected_date);
-                    intent.putExtra("Time",selected_position);
+                    if(selected_position != -1) intent.putExtra("Time",selected_position);
                     startActivityForResult(intent, 1);
                     Log.e("clicked", "clicked");
                 }
