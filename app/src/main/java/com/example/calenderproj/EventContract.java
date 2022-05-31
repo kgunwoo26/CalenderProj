@@ -4,7 +4,7 @@ import android.provider.BaseColumns;
 
 public final class EventContract {
     public static final String DB_NAME="event.db";
-    public static final int DATABASE_VERSION = 10; //컴파일 할 때마다 순차적으로 1씩 증가시키면 됩니다.
+    public static final int DATABASE_VERSION = 12; //컴파일 할 때마다 순차적으로 1씩 증가시키면 됩니다.
     private static final String TEXT_TYPE = " TEXT";
     private static final String COMMA_SEP = ",";
 

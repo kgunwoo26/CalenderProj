@@ -1,6 +1,9 @@
 package com.example.calenderproj;
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
+
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import android.location.Location;
@@ -36,12 +39,14 @@ import java.util.Calendar;
 public class ScheduleActivity extends AppCompatActivity {
     final private int REQUEST_PERMISSIONS_FOR_LAST_KNOWN_LOCATION = 100;
     final private int REQUEST_PERMISSIONS_FOR_LOCATION_UPDATES = 101;
+    public static final String SETTING_TITLE = "title";
     final static String TAG="TEST";
     private FusedLocationProviderClient mFusedLocationClient;
     private NumberPicker startHourPicker, startMinutePicker, startTypePicker;
     private NumberPicker endHourPicker, endMinutePicker, endTypePicker;
     private TextView editTextTime;
     private Calendar date, thisTime;
+    private String title;
     private int position;
     String monthOfdate;
     private boolean mRequestingLocationUpdates;
@@ -55,7 +60,6 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
         mDbHelper = new DBHelper(this);
-
 
         Intent intent = getIntent();
         date =  (Calendar)intent.getSerializableExtra("date");
@@ -83,7 +87,10 @@ public class ScheduleActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View v) {
-               insertRecord();
+                insertRecord();
+                //saveView(title);
+                Toast.makeText(getApplicationContext(), "DB Inserted", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
@@ -97,12 +104,11 @@ public class ScheduleActivity extends AppCompatActivity {
         deleteButton = findViewById(R.id.deleteBtn);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //deleteRecord();
+                deleteRecord(title);
+                Toast.makeText(getApplicationContext(), "DB Deleted", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
-
-
 
     }
 
@@ -116,20 +122,28 @@ public class ScheduleActivity extends AppCompatActivity {
         if(startTypePicker.getValue() == 1) time+=12;
         editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시");
     }
-    private String DateToString(Calendar date){
-        date = thisTime;
-        SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월 dd일");
-        return dataFormat.format(date.getTime());
+    private String DateToString(){
+        return date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 ";
     }
-    private String Start_timeToString(Calendar date){
-        date = thisTime;
-        SimpleDateFormat dataFormat =  new SimpleDateFormat("hh시 mm분");
-        return dataFormat.format(date.getTime());
+    private String Start_timeToString(){
+        int startHour = startHourPicker.getValue();
+        int startMinute = startMinutePicker.getValue();
+        int startTypeValue= startTypePicker.getValue();
+        String startType;
+        if(startTypeValue == 0) startType="AM";
+        else startType="PM";
+
+        return startType+" "+startHour+"시 "+startMinute+" 분";
     }
-    private String End_timeToString(Calendar date){
-        date = thisTime;
-        SimpleDateFormat dataFormat =  new SimpleDateFormat("hh시 mm분");
-        return dataFormat.format(date.getTime());
+    private String End_timeToString(){
+        int endHour = endHourPicker.getValue();
+        int endMinute = endMinutePicker.getValue();
+        int endTypeValue= endTypePicker.getValue();
+        String endType;
+        if(endTypeValue == 0) endType="AM";
+        else endType="PM";
+
+        return endType+" "+endHour+"시 "+endMinute+" 분";
     }
 
     void initPickers(){
@@ -209,10 +223,10 @@ public class ScheduleActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertRecord() {
         EditText title = (EditText)findViewById(R.id.editTextTime);
-        String date = DateToString(thisTime);
+        String date = DateToString();
         /*현재는 DB에 잘 저장되는지 테스트를 위해 임시적으로 title 변수와 공유하는 역할을 하고 있음 */
-        String start_time = Start_timeToString(thisTime);
-        String end_time = End_timeToString(thisTime);
+        String start_time = Start_timeToString();
+        String end_time = End_timeToString();
         EditText place = (EditText)findViewById(R.id.place);
         EditText memo = (EditText)findViewById(R.id.memo);
 
@@ -222,13 +236,31 @@ public class ScheduleActivity extends AppCompatActivity {
                 end_time,
                 place.getText().toString(),
                 memo.getText().toString());
-//        long nOfRows = mDbHelper.insertUserByMethod(name.getText().toString(),phone.getText().toString());
-//        if (nOfRows >0)
-//            Toast.makeText(this,nOfRows+" Record Inserted", Toast.LENGTH_SHORT).show();
-//        else
-//            Toast.makeText(this,"No Record Inserted", Toast.LENGTH_SHORT).show();
     }
 
+
+    private void deleteRecord(String title) {
+        EditText EditTitle = (EditText)findViewById(R.id.editTextTime);
+        title=EditTitle.getText().toString();
+        mDbHelper.deleteEventBySQL(title);
+    }
+/*
+    private String retrieveView() {
+        String nameText = "";
+        // SharedPreferences 객체에서 PREFERENCES_ATTR1 이름으로 저장된 값을 얻기
+       if (setting.contains(SETTING_TITLE)) {
+           nameText = setting.getString(SETTING_TITLE, "");
+        }
+        return nameText;
+    }
+        private void saveView(String text) {
+        // SharedPreferences 객체에 PREFERENCES_ATTR1 이름으로 text 문자열 값을 저장하기
+       SharedPreferences.Editor editor = setting.edit();
+       editor.putString(SETTING_TITLE, text);
+       editor.commit();
+    }
+
+ */
 
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

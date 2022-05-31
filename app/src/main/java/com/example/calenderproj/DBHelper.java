@@ -53,13 +53,13 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.e(TAG,"Error in inserting recodes");
         }
     }
-    public void deleteEventBySQL(String _id) {
+    public void deleteEventBySQL(String title) {
         try {
             String sql = String.format (
                     "DELETE FROM %s WHERE %s = %s",
                     EventContract.Events.TABLE_NAME,
-                    EventContract.Events._ID,
-                    _id);
+                    EventContract.Events.KEY_TITLE,
+                    title);
             getWritableDatabase().execSQL(sql);
         } catch (SQLException e) {
             Log.e(TAG,"Error in deleting recodes");
