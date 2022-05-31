@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 
 import android.location.Location;
 //mport android.location.LocationRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -27,6 +29,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -78,6 +81,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
         saveButton = findViewById(R.id.saveBtn);
         saveButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View v) {
                insertRecord();
             }
@@ -111,6 +115,21 @@ public class ScheduleActivity extends AppCompatActivity {
         int time = startHourPicker.getValue();
         if(startTypePicker.getValue() == 1) time+=12;
         editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시");
+    }
+    private String DateToString(Calendar date){
+        date = thisTime;
+        SimpleDateFormat dataFormat =  new SimpleDateFormat("yyyy년 MM월 dd일");
+        return dataFormat.format(date.getTime());
+    }
+    private String Start_timeToString(Calendar date){
+        date = thisTime;
+        SimpleDateFormat dataFormat =  new SimpleDateFormat("hh시 mm분");
+        return dataFormat.format(date.getTime());
+    }
+    private String End_timeToString(Calendar date){
+        date = thisTime;
+        SimpleDateFormat dataFormat =  new SimpleDateFormat("hh시 mm분");
+        return dataFormat.format(date.getTime());
     }
 
     void initPickers(){
@@ -187,20 +206,20 @@ public class ScheduleActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertRecord() {
         EditText title = (EditText)findViewById(R.id.editTextTime);
-        /* date, start_time, end_time 어떻게 얻어와서 저장할건지 다시 고려 해야함.
-        현재는 DB에 잘 저장되는지 테스트를 위해 임시적으로 title 변수와 공유하는 역할을 하고 있음 */
-        EditText date = (EditText)findViewById(R.id.editTextTime);
-        EditText start_time = (EditText)findViewById(R.id.editTextTime);
-        EditText end_time = (EditText)findViewById(R.id.editTextTime);
+        String date = DateToString(thisTime);
+        /*현재는 DB에 잘 저장되는지 테스트를 위해 임시적으로 title 변수와 공유하는 역할을 하고 있음 */
+        String start_time = Start_timeToString(thisTime);
+        String end_time = End_timeToString(thisTime);
         EditText place = (EditText)findViewById(R.id.place);
         EditText memo = (EditText)findViewById(R.id.memo);
 
         mDbHelper.insertEventBySQL(title.getText().toString(),
-                date.getText().toString(),
-                start_time.getText().toString(),
-                end_time.getText().toString(),
+                date,
+                start_time,
+                end_time,
                 place.getText().toString(),
                 memo.getText().toString());
 //        long nOfRows = mDbHelper.insertUserByMethod(name.getText().toString(),phone.getText().toString());
