@@ -89,6 +89,7 @@ public class MonthViewFragment extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(selected_date != null) {
                     Intent intent = new Intent(getActivity(), ScheduleActivity.class);
                     intent.putExtra("date", selectedDate);

@@ -94,4 +94,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "Select * FROM " + EventContract.Events.TABLE_NAME;
         return getReadableDatabase().rawQuery(sql,null);
     }
+    public Cursor getAllSchedule(String date){
+        String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date =" + date;
+        return getReadableDatabase().rawQuery(sql,null);
+    }
 }

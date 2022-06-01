@@ -11,6 +11,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,9 +53,6 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
     private String title;
     private int position;
     String monthOfdate;
-    private boolean mRequestingLocationUpdates;
-    private Location mLastLocation;
-    private LocationCallback mLocationCallback;
     private Button exitButton, saveButton, deleteButton ,searchButton;
     private DBHelper mDbHelper;
     private FragmentManager fragmentManager;
@@ -93,14 +91,14 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         editTextTime = findViewById(R.id.editTextTime);
 
         if(position ==-1){
-            editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+(thisTime.get(Calendar.HOUR_OF_DAY)+1)+"시");
-            //viewAllToSavedView();
+            //editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+(thisTime.get(Calendar.HOUR_OF_DAY)+1)+"시");
+            viewAllToSavedView();
             // 위에있는 setText는 무시됨. 수정필요
         }
 
         else{
-            editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+((position/7))+"시");
-            //viewAllToSavedView();
+          //  editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+((position/7))+"시");
+            viewAllToSavedView();
         }
 
 
@@ -132,6 +130,16 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+    }
+
+    static class ScheduleCount {
+        private String date ;
+        private int ScheduleCount;
+
+        public ScheduleCount(String date, int count){
+            this.date= date;
+            this.ScheduleCount = count;
+        }
     }
 
     void setEditTextTime(int Time){
@@ -189,8 +197,8 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         int endHour = endHourPicker.getValue();
         int endMinute = endMinutePicker.getValue();
         int endTypeValue= endTypePicker.getValue();
-
-        Cursor cursor = mDbHelper.getAllEventBySQL();
+        String dateToString = date.get(Calendar.YEAR)+""+(date.get(Calendar.MONTH)+1)+""+monthOfdate;
+        Cursor cursor = mDbHelper.getAllSchedule(dateToString);
 
         StringBuffer titlebuffer = new StringBuffer();
        // StringBuffer StartTimeBuffer = new StringBuffer();
@@ -198,28 +206,35 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         StringBuffer placebuffer = new StringBuffer();
         StringBuffer memobuffer = new StringBuffer();
 
-        while(cursor.moveToNext()){
-            if(cursor.getString(1).equals(editTitle.getText()))
-            {
-                titlebuffer.append(cursor.getString(1));
-                placebuffer.append(cursor.getString(5));
-                memobuffer.append(cursor.getString(6));
-                break;
-            }
-            else continue;
+//        while(cursor.moveToNext()){
+//            if(cursor.getString(0).equals(editTitle.getText()))
+//            {
+//                titlebuffer.append(cursor.getString(1));
+//                placebuffer.append(cursor.getString(5));
+//                memobuffer.append(cursor.getString(6));
+//                break;
+//            }
+//            else continue;
+//        }
+        if(cursor != null){
+            cursor.moveToFirst();
+            titlebuffer.append(cursor.getString(1));
+            placebuffer.append(cursor.getString(5));
+            memobuffer.append(cursor.getString(6));
+
+            editTitle.setText(titlebuffer);
+            editPlace.setText(placebuffer);
+            editMemo.setText(memobuffer);
+
+            edit_startHourPicker.setValue(startHour);
+            edit_startMinutePicker.setValue(startMinute);
+            edit_startTypePicker.setValue(startTypeValue);
+
+            edit_endHourPicker.setValue(endHour);
+            edit_endMinutePicker.setValue(endMinute);
+            edit_endTypePicker.setValue(endTypeValue);
         }
-
-        editTitle.setText(titlebuffer);
-        editPlace.setText(placebuffer);
-        editMemo.setText(memobuffer);
-
-        edit_startHourPicker.setValue(startHour);
-        edit_startMinutePicker.setValue(startMinute);
-        edit_startTypePicker.setValue(startTypeValue);
-
-        edit_endHourPicker.setValue(endHour);
-        edit_endMinutePicker.setValue(endMinute);
-        edit_endTypePicker.setValue(endTypeValue);
+        else Log.e("result","null");
 
     }
 
@@ -301,7 +316,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertRecord() {
         EditText title = (EditText)findViewById(R.id.editTextTime);
-        String date = DateToString();
+        String dateToSting = date.get(Calendar.YEAR)+""+(date.get(Calendar.MONTH)+1)+""+monthOfdate;
         /*현재는 DB에 잘 저장되는지 테스트를 위해 임시적으로 title 변수와 공유하는 역할을 하고 있음 */
         String start_time = Start_timeToString();
         String end_time = End_timeToString();
@@ -309,7 +324,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         EditText memo = (EditText)findViewById(R.id.memo);
 
         mDbHelper.insertEventBySQL(title.getText().toString(),
-                date,
+                dateToSting,
                 start_time,
                 end_time,
                 place.getText().toString(),
@@ -345,8 +360,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
                             double selectedLng = address.getLongitude();
                             LatLng Road = new LatLng(selectedLat, selectedLng);
                             Marker Custom = googleMap.addMarker(new MarkerOptions()
-                                    .position(Road).title("Here is the road location")
-                                    .snippet("Hon the lads"));
+                                    .position(Road));
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Road, 16));
                         }
                     }
