@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -90,17 +91,24 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
 
         initPickers();
         editTextTime = findViewById(R.id.editTextTime);
-        if(position ==-1)
+
+        if(position ==-1){
             editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+(thisTime.get(Calendar.HOUR_OF_DAY)+1)+"시");
-        else
+            //viewAllToSavedView();
+            // 위에있는 setText는 무시됨. 수정필요
+        }
+
+        else{
             editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+((position/7))+"시");
+            //viewAllToSavedView();
+        }
+
 
         saveButton = findViewById(R.id.saveBtn);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View v) {
                 insertRecord();
-                //saveView(title);
                 Toast.makeText(getApplicationContext(), "DB Inserted", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -121,8 +129,6 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
                 finish();
             }
         });
-
-
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -164,6 +170,59 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
 
         return endType+" "+endHour+"시 "+endMinute+" 분";
     }
+
+    void viewAllToSavedView(){
+        EditText editTitle = (EditText)findViewById(R.id.editTextTime);
+        EditText editPlace = (EditText)findViewById(R.id.place);
+        EditText editMemo = (EditText)findViewById(R.id.memo);
+
+        NumberPicker edit_startHourPicker = findViewById(R.id.startHourPicker);
+        NumberPicker edit_startMinutePicker = findViewById(R.id.startMinutePicker);
+        NumberPicker edit_startTypePicker = findViewById(R.id.startTypePicker);
+        NumberPicker edit_endHourPicker = findViewById(R.id.endHourPicker);
+        NumberPicker edit_endMinutePicker = findViewById(R.id.endMinutePicker);
+        NumberPicker edit_endTypePicker = findViewById(R.id.endTypePicker);
+
+        int startHour = startHourPicker.getValue();
+        int startMinute = startMinutePicker.getValue();
+        int startTypeValue= startTypePicker.getValue();
+        int endHour = endHourPicker.getValue();
+        int endMinute = endMinutePicker.getValue();
+        int endTypeValue= endTypePicker.getValue();
+
+        Cursor cursor = mDbHelper.getAllEventBySQL();
+
+        StringBuffer titlebuffer = new StringBuffer();
+       // StringBuffer StartTimeBuffer = new StringBuffer();
+       // StringBuffer EndTimeBuffer = new StringBuffer();
+        StringBuffer placebuffer = new StringBuffer();
+        StringBuffer memobuffer = new StringBuffer();
+
+        while(cursor.moveToNext()){
+            if(cursor.getString(1).equals(editTitle.getText()))
+            {
+                titlebuffer.append(cursor.getString(1));
+                placebuffer.append(cursor.getString(5));
+                memobuffer.append(cursor.getString(6));
+                break;
+            }
+            else continue;
+        }
+
+        editTitle.setText(titlebuffer);
+        editPlace.setText(placebuffer);
+        editMemo.setText(memobuffer);
+
+        edit_startHourPicker.setValue(startHour);
+        edit_startMinutePicker.setValue(startMinute);
+        edit_startTypePicker.setValue(startTypeValue);
+
+        edit_endHourPicker.setValue(endHour);
+        edit_endMinutePicker.setValue(endMinute);
+        edit_endTypePicker.setValue(endTypeValue);
+
+    }
+
 
     void initPickers(){
         startHourPicker = findViewById(R.id.startHourPicker);
@@ -263,25 +322,6 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         title=EditTitle.getText().toString();
         mDbHelper.deleteEventBySQL(title);
     }
-/*
-    private String retrieveView() {
-        String nameText = "";
-        // SharedPreferences 객체에서 PREFERENCES_ATTR1 이름으로 저장된 값을 얻기
-       if (setting.contains(SETTING_TITLE)) {
-           nameText = setting.getString(SETTING_TITLE, "");
-        }
-        return nameText;
-    }
-        private void saveView(String text) {
-        // SharedPreferences 객체에 PREFERENCES_ATTR1 이름으로 text 문자열 값을 저장하기
-       SharedPreferences.Editor editor = setting.edit();
-       editor.putString(SETTING_TITLE, text);
-       editor.commit();
-    }
-
- */
-
-
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {

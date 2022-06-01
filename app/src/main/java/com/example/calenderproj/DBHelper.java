@@ -90,7 +90,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllUsersBySQL() {
+    public Cursor getAllEventBySQL() {
         String sql = "Select * FROM " + EventContract.Events.TABLE_NAME;
         return getReadableDatabase().rawQuery(sql,null);
     }
