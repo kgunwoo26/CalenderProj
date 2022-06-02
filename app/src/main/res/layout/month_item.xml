@@ -38,34 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
-        <include
-            layout="@layout/schedule_item"
-            android:visibility="invisible"
-            android:id="@+id/includedLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <include
-            layout="@layout/schedule_item"
-            android:visibility="invisible"
-            android:id="@+id/includedLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <include
-            layout="@layout/schedule_item"
-            android:id="@+id/includedLayout4"
-            android:visibility="invisible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-        />
-        <include
-            layout="@layout/schedule_item"
-            android:id="@+id/includedLayout5"
-            android:visibility="invisible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+
 
 
     </LinearLayout>

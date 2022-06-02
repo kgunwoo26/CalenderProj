@@ -1,6 +1,7 @@
 package com.example.calenderproj;
 
 import static com.example.calenderproj.MonthViewActivity.ScheduleArray;
+import static com.example.calenderproj.MonthViewActivity.selectedDate;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -55,9 +56,9 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
     private NumberPicker endHourPicker, endMinutePicker, endTypePicker;
     private TextView editTextTime;
     private Calendar date, thisTime;
-    private String title;
-    private int position;
-    String monthOfdate;
+    private String StartTime,EndTime,Location,Memo,ScheduleTitle,Date,preTitle;
+    private int position,Index;
+    private String monthOfdate;
     private Button exitButton, saveButton, deleteButton ,searchButton;
     private DBHelper mDbHelper;
     private FragmentManager fragmentManager;
@@ -77,9 +78,30 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
         place = findViewById(R.id.place);
 
-        UpdateSchedule();
+        //UpdateSchedule();
 
         Intent intent = getIntent();
+
+        if(intent.hasExtra("ScheduleTitle"))
+            ScheduleTitle = intent.getStringExtra("ScheduleTitle");
+
+        if(intent.hasExtra("startTime"))
+            StartTime = intent.getStringExtra("startTime");
+
+        if(intent.hasExtra("EndTime"))
+            EndTime = intent.getStringExtra("EndTime");
+
+        if(intent.hasExtra("Location"))
+            Location = intent.getStringExtra("Location");
+
+        if(intent.hasExtra("Memo"))
+            Memo = intent.getStringExtra("Memo");
+
+        if(intent.hasExtra("Date"))
+            Date = intent.getStringExtra("Date");
+
+
+        Index = intent.getIntExtra("Index",-1);
         date =  (Calendar)intent.getSerializableExtra("date");
         monthOfdate = intent.getStringExtra("monthOfdate");
         position = intent.getIntExtra("Time",-1);
@@ -98,14 +120,17 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         editTextTime = findViewById(R.id.editTextTime);
 
         if(position ==-1){
-            editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+(thisTime.get(Calendar.HOUR_OF_DAY)+1)+"시");
-            //viewAllToSavedView();
-            // 위에있는 setText는 무시됨. 수정필요
+            if(StartTime == null) {
+                editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+(thisTime.get(Calendar.HOUR_OF_DAY)+1)+"시");
+                preTitle = editTextTime.getText().toString();
+                Log.e("preTitle",preTitle);
+            }
+            else editTextTime.setText(ScheduleTitle);
         }
 
         else{
           //  editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+((position/7))+"시");
-            viewAllToSavedView();
+           // viewAllToSavedView();
         }
 
 
@@ -129,7 +154,8 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         deleteButton = findViewById(R.id.deleteBtn);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                deleteRecord(title);
+                Log.e("clicked","delete");
+                deleteRecord();
                 Toast.makeText(getApplicationContext(), "DB Deleted", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -153,12 +179,14 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         int time = Time;
         if(startTypePicker.getValue() == 1) time+=12;
         editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시");
+        preTitle =date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시";
     }
 
     void setEditTextTimeAMPM(){
         int time = startHourPicker.getValue();
         if(startTypePicker.getValue() == 1) time+=12;
         editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시");
+        preTitle =date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시";
     }
 
 //    private String DateToString(int index){
@@ -246,15 +274,15 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
 
-    void UpdateSchedule() {
-        ScheduleArray.clear();
-        Cursor cursor = mDbHelper.getAllEventBySQL();
-        while (cursor.moveToNext()) {
-            Schedule schedule = new Schedule(cursor.getString(2), cursor.getString(2));
-            ScheduleArray.add(schedule);
-        }
-                Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.size()));
-    }
+//    void UpdateSchedule() {
+//        ScheduleArray.clear();
+//        Cursor cursor = mDbHelper.getAllEventBySQL();
+//        while (cursor.moveToNext()) {
+//            Schedule schedule = new Schedule(cursor.getString(2), cursor.getString(2));
+//            ScheduleArray.add(schedule);
+//        }
+//                Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.size()));
+//    }
 
     void initPickers(){
         startHourPicker = findViewById(R.id.startHourPicker);
@@ -279,6 +307,9 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         // 주 별 해당 오전 : AMPM = 2 , 오후 : AMPM = 3
         // 주간 AMPM값들은 0,1로 각각 교체됨
         if(position == -1) {
+            if(Index != -1){
+
+            }
             startHourPicker.setValue((thisTime.get(Calendar.HOUR) + 1));
             endHourPicker.setValue((thisTime.get(Calendar.HOUR) + 2));
             if(thisTime.get(Calendar.AM_PM) == Calendar.AM) AMPM =0;
@@ -302,7 +333,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         startHourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                setEditTextTime(newVal);
+                if(editTextTime.getText().toString().equals(preTitle)) setEditTextTime(newVal);
             }
         });
 
@@ -324,6 +355,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         startTypePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if(editTextTime.getText().toString().equals(preTitle))
                 setEditTextTimeAMPM();
             }
         });
@@ -352,14 +384,15 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
                 end_time,
                 place.getText().toString(),
                 memo.getText().toString());
-        UpdateSchedule();
+        //UpdateSchedule();
     }
 
 
-    private void deleteRecord(String title) {
-        EditText EditTitle = (EditText)findViewById(R.id.editTextTime);
-        title=EditTitle.getText().toString();
-        mDbHelper.deleteEventBySQL(title);
+    private void deleteRecord() {
+        Log.e("Index","-1");
+        if(Index != -1)
+            Log.e("Index","not -1");
+            mDbHelper.deleteEventBySQL(Index);
     }
 
     @Override

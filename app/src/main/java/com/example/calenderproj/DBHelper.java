@@ -53,13 +53,14 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.e(TAG,"Error in inserting recodes");
         }
     }
-    public void deleteEventBySQL(String title) {
+    public void deleteEventBySQL(int Index) {
         try {
             String sql = String.format (
                     "DELETE FROM %s WHERE %s = %s",
                     EventContract.Events.TABLE_NAME,
-                    EventContract.Events.KEY_TITLE,
-                    title);
+                    EventContract.Events._ID,
+                    Index
+                    );
             getWritableDatabase().execSQL(sql);
         } catch (SQLException e) {
             Log.e(TAG,"Error in deleting recodes");
@@ -95,11 +96,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery(sql,null);
     }
     public Cursor getAllSchedule(String date){
-        String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date =" + date;
+        String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date ='" + date +"'";
+        Log.e("msqlresult-2",sql);
         return getReadableDatabase().rawQuery(sql,null);
     }
     public Cursor searchSchedule(String date){
         String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date LIKE '" + date+"%'";
+        Log.e("msql",sql);
+        return getReadableDatabase().rawQuery(sql,null);
+    }
+    public Cursor searchScheduleByDay(String date){
+        String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date LIKE '%-" + date+"'";
         Log.e("msql",sql);
         return getReadableDatabase().rawQuery(sql,null);
     }

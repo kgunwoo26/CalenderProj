@@ -78,17 +78,55 @@ public class MonthCalendarAdapter extends BaseAdapter {
         UpdateSchedules();
         int count =0;
         ArrayList<Integer> dateSchedule = new ArrayList<>();
-        Log.e("this size", String.valueOf(Schedules.size()));
+
         for(int i =0; i<Schedules.size(); i++){
-            Log.e("same", Schedules.get(i).mdate +","+getItem(position)) ;
             if(getItem(position).equals(Schedules.get(i).mdate))  {
-                Log.e("same1","!!!!!1");
-                FrameLayout bg = convertView.findViewById(R.id.include_bg);
-                bg.setBackgroundColor(R.color.purple_200);
-                TextView include_Text = convertView.findViewById(R.id.include_Text);
-                include_Text.setText(Schedules.get(i).mtitle);
-                include_Text.setTextColor(R.color.white);
-                convertView.findViewById(R.id.includedLayout).setVisibility(View.VISIBLE);
+                TextView include_Text;
+                count++;
+
+                switch (count){
+                    case 1:
+                        include_Text = convertView.findViewById(R.id.include_Text);
+                        include_Text.setText(Schedules.get(i).mtitle);
+                        include_Text.setTextColor(R.color.white);
+                        FrameLayout bg = convertView.findViewById(R.id.include_bg);
+                        bg.setVisibility(View.VISIBLE);
+                        convertView.findViewById(R.id.includedLayout).setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        include_Text = convertView.findViewById(R.id.include_Text2);
+                        include_Text.setText(Schedules.get(i).mtitle);
+                        include_Text.setTextColor(R.color.white);
+                        FrameLayout bg2 = convertView.findViewById(R.id.include_bg2);
+                        bg2.setVisibility(View.VISIBLE);
+                        convertView.findViewById(R.id.includedLayout).setVisibility(View.VISIBLE);
+                        break;
+                    case 3:
+                        include_Text = convertView.findViewById(R.id.include_Text3);
+                        include_Text.setText(Schedules.get(i).mtitle);
+                        include_Text.setTextColor(R.color.white);
+                        FrameLayout bg3 = convertView.findViewById(R.id.include_bg3);
+                        bg3.setVisibility(View.VISIBLE);
+                        break;
+                    case 4:
+                        include_Text = convertView.findViewById(R.id.include_Text4);
+                        include_Text.setText(Schedules.get(i).mtitle);
+                        include_Text.setTextColor(R.color.white);
+                        FrameLayout bg4 = convertView.findViewById(R.id.include_bg4);
+                        bg4.setVisibility(View.VISIBLE);
+                        convertView.findViewById(R.id.includedLayout).setVisibility(View.VISIBLE);
+                        break;
+                    case 5:
+                        include_Text = convertView.findViewById(R.id.include_Text5);
+                        include_Text.setText(Schedules.get(i).mtitle);
+                        include_Text.setTextColor(R.color.white);
+                        FrameLayout bg5 = convertView.findViewById(R.id.include_bg5);
+                        bg5.setVisibility(View.VISIBLE);
+                        break;
+
+
+                }
+
             }
         }
 

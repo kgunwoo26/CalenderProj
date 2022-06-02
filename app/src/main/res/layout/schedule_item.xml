@@ -2,10 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     >
     <FrameLayout
         android:id="@+id/include_bg"
         android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:background="@color/purple_200"
         android:layout_height="wrap_content">
 
         <TextView
@@ -19,6 +22,79 @@
             ></TextView>
 
     </FrameLayout>
+    <FrameLayout
+        android:id="@+id/include_bg2"
+        android:visibility="invisible"
+        android:background="@color/green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/include_Text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="test"
+            android:singleLine="true"
+            android:ellipsize="none"
+            ></TextView>
+
+    </FrameLayout>
+    <FrameLayout
+        android:background="#F5DF99"
+        android:id="@+id/include_bg3"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/include_Text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="test"
+            android:singleLine="true"
+            android:ellipsize="none"
+            ></TextView>
+
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/include_bg4"
+        android:visibility="invisible"
+        android:background="#F6FBF4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/include_Text4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="test"
+            android:singleLine="true"
+            android:ellipsize="none"
+            ></TextView>
+
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/include_bg5"
+        android:visibility="invisible"
+        android:background="#4B8673"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/include_Text5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="test"
+            android:singleLine="true"
+            android:ellipsize="none"
+            ></TextView>
+
+    </FrameLayout>
+
 
 
 </LinearLayout>

@@ -35,14 +35,13 @@
             android:id="@+id/title"/>
 
         <EditText
-
             android:id="@+id/editTextTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="time" />
+            />
 
     </LinearLayout>
 
@@ -154,7 +153,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="243dp"
+        android:layout_height="223dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -167,6 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="22dp"
+                android:hint="장소"
                 android:ems="14" />
 
             <Button
@@ -194,9 +194,11 @@
 
         <EditText
             android:id="@+id/memo"
+            android:hint="메모"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
+
             android:ems="50" />
 
         <LinearLayout
