@@ -1,5 +1,7 @@
 package com.example.calenderproj;
 
+import static com.example.calenderproj.MonthViewActivity.ScheduleArray;
+
 import android.Manifest;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -36,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -60,6 +63,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
     private List<Address> addressList;
     private EditText place;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
         place = findViewById(R.id.place);
 
+        UpdateSchedule();
 
         Intent intent = getIntent();
         date =  (Calendar)intent.getSerializableExtra("date");
@@ -91,8 +96,8 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         editTextTime = findViewById(R.id.editTextTime);
 
         if(position ==-1){
-            //editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+(thisTime.get(Calendar.HOUR_OF_DAY)+1)+"시");
-            viewAllToSavedView();
+            editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+(thisTime.get(Calendar.HOUR_OF_DAY)+1)+"시");
+            //viewAllToSavedView();
             // 위에있는 setText는 무시됨. 수정필요
         }
 
@@ -132,13 +137,13 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
-    static class ScheduleCount {
-        private String date ;
-        private int ScheduleCount;
+    static class Schedule{
+        private String date;
+        private String ScheduleTitle;
 
-        public ScheduleCount(String date, int count){
-            this.date= date;
-            this.ScheduleCount = count;
+        public Schedule(String date, String Title){
+            this.date = date;
+            this.ScheduleTitle = Title;
         }
     }
 
@@ -154,9 +159,9 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+time+"시");
     }
 
-    private String DateToString(){
-        return date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 ";
-    }
+//    private String DateToString(int index){
+//        return ScheduleArray.get(index).year+"-"+ScheduleArray.get(index).month+"-"+ScheduleArray.get(index).day;
+//    }
 
     private String Start_timeToString(){
         int startHour = startHourPicker.getValue();
@@ -238,6 +243,16 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    void UpdateSchedule() {
+        ScheduleArray.clear();
+        Cursor cursor = mDbHelper.getAllEventBySQL();
+        while (cursor.moveToNext()) {
+            Schedule schedule = new Schedule(cursor.getString(2), cursor.getString(2));
+            ScheduleArray.add(schedule);
+        }
+                Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.size()));
+
+    }
 
     void initPickers(){
         startHourPicker = findViewById(R.id.startHourPicker);
@@ -318,6 +333,12 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         EditText title = (EditText)findViewById(R.id.editTextTime);
         String dateToSting = date.get(Calendar.YEAR)+""+(date.get(Calendar.MONTH)+1)+""+monthOfdate;
         /*현재는 DB에 잘 저장되는지 테스트를 위해 임시적으로 title 변수와 공유하는 역할을 하고 있음 */
+        //int count=0;
+//        Schedule schedule = new Schedule(dateToSting,title.getText().toString());
+//        ScheduleArray.add(schedule);
+//        Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.size()));
+//        Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.get(0).ScheduleTitle));
+
         String start_time = Start_timeToString();
         String end_time = End_timeToString();
         EditText place = (EditText)findViewById(R.id.place);
@@ -329,6 +350,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
                 end_time,
                 place.getText().toString(),
                 memo.getText().toString());
+        UpdateSchedule();
     }
 
 

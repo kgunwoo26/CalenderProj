@@ -10,8 +10,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +33,8 @@ public class MonthViewActivity extends AppCompatActivity {
     public static ArrayList<ArrayList> calArr;
     public static ArrayList<ArrayList> w_calArr;
     public static float Params;
+    private DBHelper mDbHelper;
+    public static ArrayList<ScheduleActivity.Schedule> ScheduleArray = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -39,15 +43,27 @@ public class MonthViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myToolbar = (Toolbar) findViewById(R.id.myToolbar);
+        mDbHelper = new DBHelper(this);
         setSupportActionBar(myToolbar);
         initWidgets();
-
+        UpdateSchedule();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    void UpdateSchedule() {
+        ScheduleArray.clear();
+        Cursor cursor = mDbHelper.getAllEventBySQL();
+        while (cursor.moveToNext()) {
+            ScheduleActivity.Schedule schedule = new ScheduleActivity.Schedule(cursor.getString(2), cursor.getString(2));
+            ScheduleArray.add(schedule);
+        }
+        Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.size()));
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
