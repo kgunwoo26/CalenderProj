@@ -1,7 +1,7 @@
 package com.example.calenderproj;
 
 import static com.example.calenderproj.MonthViewActivity.ScheduleArray;
-import static com.example.calenderproj.MonthViewActivity.selectedDate;
+import static com.example.calenderproj.MonthViewActivity.reloadNeed;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -140,6 +140,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View v) {
                 insertRecord();
                 Toast.makeText(getApplicationContext(), "DB Inserted", Toast.LENGTH_SHORT).show();
+                reloadNeed = true;
                 finish();
             }
         });
@@ -157,6 +158,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
                 Log.e("clicked","delete");
                 deleteRecord();
                 Toast.makeText(getApplicationContext(), "DB Deleted", Toast.LENGTH_SHORT).show();
+                reloadNeed = true;
                 finish();
             }
         });

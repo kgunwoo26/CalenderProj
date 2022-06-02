@@ -53,6 +53,8 @@ public class MonthViewFragment extends Fragment {
 
     }
 
+
+
     void UpdateSchedules(String date) {
         Cursor cursor = mDbHelper.getAllSchedule(selectedDate.get(Calendar.YEAR)+"-"+(selectedDate.get(Calendar.MONTH)+1)+"-"+date);
         Log.e("found result-2", selectedDate.get(Calendar.YEAR)+"-"+(selectedDate.get(Calendar.MONTH)+1)+"-"+date);
