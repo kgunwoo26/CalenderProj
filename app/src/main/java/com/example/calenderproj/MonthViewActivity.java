@@ -65,12 +65,11 @@ public class MonthViewActivity extends AppCompatActivity {
             ScheduleActivity.Schedule schedule = new ScheduleActivity.Schedule(cursor.getString(2), cursor.getString(1));
             ScheduleArray.add(schedule);
         }
-        Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.size()));
 
     }
 
     @Override
-    public void onResume() {
+    public void onResume() { // 새로고침, reloadNeed를 true 해주면 새로고침
         super.onResume();
         if (this.reloadNeed){
             Intent intent = getIntent();

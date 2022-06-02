@@ -33,8 +33,6 @@ public class MonthCalendarAdapter extends BaseAdapter {
         mResource = resource;
         firstSelecteDate.add(Calendar.MONTH,-(500-pos));
         mDate = firstSelecteDate.get(Calendar.YEAR)+"-"+(firstSelecteDate.get(Calendar.MONTH)+1);
-        Log.e("this date ", mDate);
-        Log.e("this position ", String.valueOf(pos));
     }
     @Override
     public int getCount() {
@@ -62,7 +60,6 @@ public class MonthCalendarAdapter extends BaseAdapter {
         Cursor cursor = mDbHelper.searchSchedule(mDate);
         while (cursor.moveToNext()) {
             String[] splitStr = cursor.getString(2).split("-");
-            Log.e("found result",cursor.getString(2));
             Schedule schedule = new Schedule(splitStr[2], cursor.getString(1));
             Schedules.add(schedule);
         }

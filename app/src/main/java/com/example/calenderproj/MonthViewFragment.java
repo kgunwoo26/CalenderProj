@@ -57,10 +57,8 @@ public class MonthViewFragment extends Fragment {
 
     void UpdateSchedules(String date) {
         Cursor cursor = mDbHelper.getAllSchedule(selectedDate.get(Calendar.YEAR)+"-"+(selectedDate.get(Calendar.MONTH)+1)+"-"+date);
-        Log.e("found result-2", selectedDate.get(Calendar.YEAR)+"-"+(selectedDate.get(Calendar.MONTH)+1)+"-"+date);
         while (cursor.moveToNext()) {
             String[] splitStr = cursor.getString(2).split("-");
-            Log.e("found result-2","found");
             MonthCalendarAdapter.Schedule schedule = new MonthCalendarAdapter.Schedule(splitStr[2], cursor.getString(1));
             Schedules.add(schedule);
         }
@@ -117,7 +115,7 @@ public class MonthViewFragment extends Fragment {
                                 intent.putExtra("Memo",cursor.getString(6));
 
                                 startActivityForResult(intent, 1);
-                                Log.e("clicked", "clicked");
+
 
                             }
                         });
@@ -159,7 +157,6 @@ public class MonthViewFragment extends Fragment {
                     intent.putExtra("date", selectedDate);
                     intent.putExtra("monthOfdate", selected_date);
                     startActivityForResult(intent, 1);
-                    Log.e("clicked", "clicked");
                 }
             }
         });

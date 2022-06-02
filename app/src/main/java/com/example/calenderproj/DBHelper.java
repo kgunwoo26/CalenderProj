@@ -97,17 +97,14 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public Cursor getAllSchedule(String date){
         String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date ='" + date +"'";
-        Log.e("msqlresult-2",sql);
         return getReadableDatabase().rawQuery(sql,null);
     }
     public Cursor searchSchedule(String date){
         String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date LIKE '" + date+"%'";
-        Log.e("msql",sql);
         return getReadableDatabase().rawQuery(sql,null);
     }
     public Cursor searchScheduleByDay(String date){
         String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date LIKE '%-" + date+"'";
-        Log.e("msql",sql);
         return getReadableDatabase().rawQuery(sql,null);
     }
 }
