@@ -52,7 +52,8 @@ public class MonthViewFragment extends Fragment {
         ArrayList<String> DateArr ;
         View rootView = inflater.inflate(R.layout.fragment_month_view, container, false) ;
         DateArr = calArr.get(num);
-        MonthCalendarAdapter adapter = new MonthCalendarAdapter( getActivity().getApplicationContext(),R.layout.month_item, DateArr);
+
+        MonthCalendarAdapter adapter = new MonthCalendarAdapter( getActivity().getApplicationContext(),R.layout.month_item, DateArr,num);
         GridView gridView = rootView.findViewById(R.id.month_view);
         gridView.setAdapter(adapter);
 

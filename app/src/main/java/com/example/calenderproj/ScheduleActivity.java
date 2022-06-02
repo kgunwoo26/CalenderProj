@@ -3,6 +3,8 @@ package com.example.calenderproj;
 import static com.example.calenderproj.MonthViewActivity.ScheduleArray;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -243,6 +245,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+
     void UpdateSchedule() {
         ScheduleArray.clear();
         Cursor cursor = mDbHelper.getAllEventBySQL();
@@ -251,7 +254,6 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
             ScheduleArray.add(schedule);
         }
                 Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.size()));
-
     }
 
     void initPickers(){
@@ -331,7 +333,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertRecord() {
         EditText title = (EditText)findViewById(R.id.editTextTime);
-        String dateToSting = date.get(Calendar.YEAR)+""+(date.get(Calendar.MONTH)+1)+""+monthOfdate;
+        String dateToSting = date.get(Calendar.YEAR)+"-"+(date.get(Calendar.MONTH)+1)+"-"+monthOfdate;
         /*현재는 DB에 잘 저장되는지 테스트를 위해 임시적으로 title 변수와 공유하는 역할을 하고 있음 */
         //int count=0;
 //        Schedule schedule = new Schedule(dateToSting,title.getText().toString());

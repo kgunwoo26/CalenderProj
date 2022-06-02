@@ -33,7 +33,9 @@ public class MonthViewActivity extends AppCompatActivity {
     public static ArrayList<ArrayList> calArr;
     public static ArrayList<ArrayList> w_calArr;
     public static float Params;
-    private DBHelper mDbHelper;
+    public static Calendar firstSelecteDate;
+    public static DBHelper mDbHelper;
+
     public static ArrayList<ScheduleActivity.Schedule> ScheduleArray = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -59,7 +61,7 @@ public class MonthViewActivity extends AppCompatActivity {
         ScheduleArray.clear();
         Cursor cursor = mDbHelper.getAllEventBySQL();
         while (cursor.moveToNext()) {
-            ScheduleActivity.Schedule schedule = new ScheduleActivity.Schedule(cursor.getString(2), cursor.getString(2));
+            ScheduleActivity.Schedule schedule = new ScheduleActivity.Schedule(cursor.getString(2), cursor.getString(1));
             ScheduleArray.add(schedule);
         }
         Log.e("ScheduleArray.size()", String.valueOf(ScheduleArray.size()));
@@ -99,6 +101,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private void initWidgets(){
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
+        firstSelecteDate = selectedDate;
         Params= (float) 0.1;
         init_calArr();
         setMonthView();
