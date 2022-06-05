@@ -1,14 +1,12 @@
 package com.example.calenderproj;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import java.util.Calendar;
 
 public class MonthViewPagerAdapter extends FragmentStateAdapter {
     private static int NUM_ITEMS=1000;
@@ -20,7 +18,7 @@ public class MonthViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        MonthViewFragment monthView = new MonthViewFragment(position);
+        MonthViewPagerFragment monthView = new MonthViewPagerFragment(position);
         return monthView;
     }
 

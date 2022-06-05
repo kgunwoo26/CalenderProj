@@ -1,8 +1,9 @@
 package com.example.calenderproj;
 
-import static com.example.calenderproj.MonthViewActivity.DateToString;
-import static com.example.calenderproj.MonthViewActivity.selectedDate;
-import static com.example.calenderproj.MonthViewActivity.toolbar_text;
+import static com.example.calenderproj.MainActivity.DateToString;
+import static com.example.calenderproj.MainActivity.selectedDate;
+import static com.example.calenderproj.MainActivity.toolbar_text;
+import static com.example.calenderproj.MainActivity.count;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
@@ -18,18 +18,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MonthFragment extends Fragment {
-    private ViewGroup viewGroup;
-    private int count=500;
-    private Button addButton;
 
-    public MonthFragment() {
+public class MonthCalendarFragment extends Fragment {
+    private ViewGroup viewGroup;
+    private Button addButton;
+    private static int selectedPage =500;
+
+    public MonthCalendarFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +53,20 @@ public class MonthFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if(count >position) selectedDate.add(Calendar.MONTH,-1);
-                else if ( count < position ) selectedDate.add(Calendar.MONTH,1);
+                if(count >position) {
+                    selectedDate.add(Calendar.MONTH,-1);
+                    Log.e("위치", "-");
+
+                }
+                else if ( count < position ) {
+                    selectedDate.add(Calendar.MONTH,1);
+                    Log.e("위치", "-");
+                }
                 else ;
+                Log.e("위치", String.valueOf(position)+" "+count);
                 count=position;
                 setToolbar_text();
+
             }
         });
     }

@@ -3,21 +3,15 @@ package com.example.calenderproj;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -25,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class MonthViewActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     Toolbar myToolbar;
     public static Calendar selectedDate;
     public static TextView toolbar_text;
@@ -35,6 +29,7 @@ public class MonthViewActivity extends AppCompatActivity {
     public static float Params;
     public static Calendar firstSelecteDate;
     public static DBHelper mDbHelper;
+    public static int count=500;
     public static boolean reloadNeed = false;
 
     public static ArrayList<ScheduleActivity.Schedule> ScheduleArray = new ArrayList<>();
@@ -116,7 +111,7 @@ public class MonthViewActivity extends AppCompatActivity {
     private void initWidgets(){
         toolbar_text = findViewById(R.id.toolbar_text);
         selectedDate = Calendar.getInstance();
-        firstSelecteDate = selectedDate;
+        firstSelecteDate = (Calendar) selectedDate.clone();
         Params= (float) 0.1;
         init_calArr();
         setMonthView();
@@ -136,7 +131,7 @@ public class MonthViewActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         toolbar_text.setText(DateToString(selectedDate));
-        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new MonthCalendarFragment()).commit();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -144,7 +139,7 @@ public class MonthViewActivity extends AppCompatActivity {
         toolbar_text.setText(DateToString(selectedDate));
         init_w_calArr();
         setTimeView();
-        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.dayGridView, new WeekCalendarFragment()).commit();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

@@ -3,14 +3,12 @@ package com.example.calenderproj;
 
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import java.util.Calendar;
 
 public class WeekViewPagerAdapter extends FragmentStateAdapter {
     private static int NUM_ITEMS=1000;
@@ -22,7 +20,7 @@ public class WeekViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        WeekViewFragment weekView = new WeekViewFragment(position);
+        WeekViewPagerFragment weekView = new WeekViewPagerFragment(position);
         return weekView;
     }
 

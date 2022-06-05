@@ -23,7 +23,7 @@
             android:name=".ScheduleActivity"
             android:exported="false" />
         <activity
-            android:name=".MonthViewActivity"
+            android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true">
             <intent-filter>

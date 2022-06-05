@@ -1,8 +1,8 @@
 package com.example.calenderproj;
 
-import static com.example.calenderproj.MonthViewActivity.DateToString;
-import static com.example.calenderproj.MonthViewActivity.selectedDate;
-import static com.example.calenderproj.MonthViewActivity.toolbar_text;
+import static com.example.calenderproj.MainActivity.DateToString;
+import static com.example.calenderproj.MainActivity.selectedDate;
+import static com.example.calenderproj.MainActivity.toolbar_text;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -16,10 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.viewpager2.widget.ViewPager2;
 import java.util.Calendar;
 
-public class WeekFragment extends Fragment {
+public class WeekCalendarFragment extends Fragment {
     private ViewGroup viewGroup;
     private int count=500;
-    public WeekFragment() {
+    public WeekCalendarFragment() {
 
     }
     @Override

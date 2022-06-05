@@ -1,8 +1,8 @@
 package com.example.calenderproj;
 
-import static com.example.calenderproj.MonthViewActivity.TimeArr;
-import static com.example.calenderproj.MonthViewActivity.selectedDate;
-import static com.example.calenderproj.MonthViewActivity.w_calArr;
+import static com.example.calenderproj.MainActivity.TimeArr;
+import static com.example.calenderproj.MainActivity.selectedDate;
+import static com.example.calenderproj.MainActivity.w_calArr;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class WeekViewFragment extends Fragment {
+public class WeekViewPagerFragment extends Fragment {
     private static int num;
     private static View D_previous = null;
     private static View T_previous = null;
@@ -33,7 +33,7 @@ public class WeekViewFragment extends Fragment {
     private int selected_position=-1;
 
     private ArrayList<Boolean> colors;
-    public WeekViewFragment(int position) {
+    public WeekViewPagerFragment(int position) {
         num = position;
     }
 
