@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static DBHelper mDbHelper;
     public static int count=500;
     public static boolean reloadNeed = false;
+    public static Calendar LastSelectedDate;
 
     public static ArrayList<ScheduleActivity.Schedule> ScheduleArray = new ArrayList<>();
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = getIntent();
             overridePendingTransition(0, 0);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            count =500;
             finish();
             overridePendingTransition(0, 0);
             startActivity(intent);
@@ -110,7 +112,9 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initWidgets(){
         toolbar_text = findViewById(R.id.toolbar_text);
-        selectedDate = Calendar.getInstance();
+        if(LastSelectedDate == null)
+            selectedDate = Calendar.getInstance();
+        else selectedDate = LastSelectedDate;
         firstSelecteDate = (Calendar) selectedDate.clone();
         Params= (float) 0.1;
         init_calArr();

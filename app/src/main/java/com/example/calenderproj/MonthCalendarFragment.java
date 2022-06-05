@@ -1,6 +1,7 @@
 package com.example.calenderproj;
 
 import static com.example.calenderproj.MainActivity.DateToString;
+import static com.example.calenderproj.MainActivity.LastSelectedDate;
 import static com.example.calenderproj.MainActivity.selectedDate;
 import static com.example.calenderproj.MainActivity.toolbar_text;
 import static com.example.calenderproj.MainActivity.count;
@@ -25,7 +26,7 @@ import java.util.Calendar;
 public class MonthCalendarFragment extends Fragment {
     private ViewGroup viewGroup;
     private Button addButton;
-    private static int selectedPage =500;
+    public static int selectedPage =500;
 
     public MonthCalendarFragment() {
         // Required empty public constructor
@@ -33,6 +34,7 @@ public class MonthCalendarFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
     }
@@ -43,6 +45,7 @@ public class MonthCalendarFragment extends Fragment {
     }
 
     private void setInit(){
+        Log.e("selectedPage", String.valueOf(selectedPage));
         ViewPager2 viewPageSetup = viewGroup.findViewById(R.id.vpPager);
         MonthViewPagerAdapter adapter = new MonthViewPagerAdapter(getActivity());
         viewPageSetup.setAdapter(adapter);
@@ -63,8 +66,10 @@ public class MonthCalendarFragment extends Fragment {
                     Log.e("위치", "-");
                 }
                 else ;
-                Log.e("위치", String.valueOf(position)+" "+count);
+                Log.e("위치", "p:"+String.valueOf(position)+" s:"+selectedPage);
+                selectedPage =position;
                 count=position;
+                LastSelectedDate = selectedDate;
                 setToolbar_text();
 
             }
