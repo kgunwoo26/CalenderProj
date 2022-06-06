@@ -103,8 +103,4 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date LIKE '" + date+"%'";
         return getReadableDatabase().rawQuery(sql,null);
     }
-    public Cursor searchScheduleByDay(String date){
-        String sql = "Select * FROM " + EventContract.Events.TABLE_NAME + " WHERE Date LIKE '%-" + date+"'";
-        return getReadableDatabase().rawQuery(sql,null);
-    }
 }

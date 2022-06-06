@@ -135,7 +135,6 @@ public class MonthViewPagerFragment extends Fragment {
 
                 }
                 FloatingActionButton addBtn =getActivity().findViewById(R.id.addBtn);
-                addBtn.setBackgroundColor(1);
                 addBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -126,7 +126,7 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
         else{
-          //  editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+((position/7))+"시");
+            editTextTime.setText(date.get(Calendar.YEAR)+"년 "+(date.get(Calendar.MONTH)+1)+"월 "+monthOfdate+"일 "+((position/7))+"시");
            // viewAllToSavedView();
         }
 

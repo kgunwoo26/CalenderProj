@@ -29,7 +29,7 @@ public class WeekViewPagerFragment extends Fragment {
     private static View D_previous = null;
     private static View T_previous = null;
     private static int Tp;
-    private String selected_date;
+    private static String selected_date;
     private int selected_position=-1;
 
     private ArrayList<Boolean> colors;
@@ -59,6 +59,7 @@ public class WeekViewPagerFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View vClicked, int position, long id) {
                 selected_date = adapter.getItem(position);
                 if(selected_date != "") {
+                    selected_position =-1;
                     Toast.makeText(getActivity(),selectedDate.get(Calendar.YEAR)+"년 "+(selectedDate.get(Calendar.MONTH)+1)+"월 "+
                             selected_date+"일", Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
@@ -123,7 +124,6 @@ public class WeekViewPagerFragment extends Fragment {
         }
 
         FloatingActionButton addBtn =getActivity().findViewById(R.id.addBtn);
-        addBtn.setBackgroundColor(1);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
