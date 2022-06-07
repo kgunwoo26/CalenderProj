@@ -1,12 +1,17 @@
 package com.example.calenderproj;
 
 import static com.example.calenderproj.MainActivity.reloadNeed;
+import static com.example.calenderproj.MainActivity.selectedDate;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
@@ -149,14 +154,28 @@ public class ScheduleActivity extends AppCompatActivity implements OnMapReadyCal
                 finish();
             }
         });
-
-        deleteButton = findViewById(R.id.deleteBtn);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String[] displayValues = {"확인" , "취소"};
+        builder.setTitle("삭제 하시겠습니까 ?");
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
                 deleteRecord();
                 Toast.makeText(getApplicationContext(), "DB Deleted", Toast.LENGTH_SHORT).show();
                 reloadNeed = true;
                 finish();
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        deleteButton = findViewById(R.id.deleteBtn);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                builder.show();
             }
         });
 
